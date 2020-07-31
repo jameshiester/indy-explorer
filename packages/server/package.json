@@ -1,0 +1,28 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "api for indy network explorer",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "build": "webpack",
+    "test": "jest"
+  },
+  "author": "James Hiester",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "better-sqlite3": "^7.1.0",
+    "express": "^4.17.1",
+    "http": "0.0.1-security",
+    "indy-sdk": "1.14.3",
+    "lodash": "^4.17.19",
+    "model": "file:../model",
+    "pg": "^8.3.0",
+    "reflect-metadata": "^0.1.13",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0",
+    "typeorm": "0.2.25",
+    "uuid": "^8.3.0"
+  }
+}
