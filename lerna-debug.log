@@ -1,0 +1,20 @@
+0 silly argv { _: [ 'clean' ],
+0 silly argv   lernaVersion: '3.22.1',
+0 silly argv   '$0':
+0 silly argv    'C:\\Users\\JHST\\AppData\\Roaming\\npm\\node_modules\\lerna\\cli.js' }
+1 notice cli v3.22.1
+2 verbose rootPath C:\apps\indy-explorer
+3 info Removing the following directories:
+4 info clean packages\client\node_modules
+4 info clean packages\model\node_modules
+4 info clean packages\server\node_modules
+5 info clean removing C:\apps\indy-explorer\packages\client\node_modules
+6 silly rimrafDir C:\apps\indy-explorer\packages\client\node_modules
+7 info clean removing C:\apps\indy-explorer\packages\model\node_modules
+8 silly rimrafDir C:\apps\indy-explorer\packages\model\node_modules
+9 info clean removing C:\apps\indy-explorer\packages\server\node_modules
+10 silly rimrafDir C:\apps\indy-explorer\packages\server\node_modules
+11 verbose rimrafDir removed C:\apps\indy-explorer\packages\server\node_modules
+12 error Error: Command failed: C:\Program Files\nodejs\node.exe C:\apps\indy-explorer\node_modules\@lerna\rimraf-dir\node_modules\rimraf\bin.js --no-glob C:\apps\indy-explorer\packages\client\node_modules\
+12 error     at makeError (C:\apps\indy-explorer\node_modules\execa\index.js:174:9)
+12 error     at Promise.all.then.arr (C:\apps\indy-explorer\node_modules\execa\index.js:278:16)

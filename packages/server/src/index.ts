@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import { createConnection } from 'typeorm';
 import indy from 'indy-sdk';
@@ -46,8 +47,11 @@ createConnection({
     }
   });
 
-  app.get('/*', async (req, res, next) => {
-    res.json({ ok: true });
+  // add middlewares
+  app.use(express.static(path.join(__dirname, '..', '..', 'client/build')));
+
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', '..', 'client/build/index.html'));
   });
 
   // start express server on port 8000

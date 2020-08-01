@@ -1,0 +1,2 @@
+FROM bcgovimages/von-image:next-1
+ADD genesis.txn config/genesis.txn

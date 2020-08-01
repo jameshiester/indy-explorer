@@ -1,0 +1,140 @@
+import { dateToString } from '@util/helper';
+import DataRenderer from './DataRenderer';
+
+const commonColumns = {
+  seqNo: {
+    field: 'seqno',
+    headerName: '#',
+    width: 100,
+    minWidth: 100,
+    maxWidth: 100,
+  },
+  destination: {
+    field: 'destination',
+    headerName: 'Nym / Schema',
+    flex: 1,
+    floatingFilter: true,
+    filterParams: {
+      suppressAndOrCondition: true,
+    },
+    filter: 'agTextColumnFilter',
+    minWidth: 250,
+  },
+  role: {
+    field: 'role',
+    headerName: 'Role',
+    maxWidth: 200,
+    floatingFilter: true,
+    filter: 'agTextColumnFilter',
+    minWidth: 150,
+  },
+  type: {
+    field: 'type',
+    headerName: 'Type',
+    flex: 1,
+    maxWidth: 125,
+    floatingFilter: true,
+    filter: 'agTextColumnFilter',
+    minWidth: 150,
+  },
+  createdBy: {
+    field: 'sourceid',
+    headerName: 'Created By',
+    flex: 1,
+    floatingFilter: true,
+    filter: 'agTextColumnFilter',
+    minWidth: 250,
+  },
+  created: {
+    field: 'added',
+    headerName: 'Created',
+    flex: 1,
+    valueFormatter: ({ value }: any) =>
+      value ? dateToString(value) : undefined,
+    minWidth: 200,
+  },
+  data: {
+    colId: 'seqno',
+    field: 'value',
+    headerName: 'View Data',
+    cellClass: 'ag-cell-centered',
+    headerClass: 'ag-cell-centered',
+    flex: 1,
+    minWidth: 150,
+    maxWidth: 150,
+    sortable: false,
+    cellRendererFramework: DataRenderer,
+  },
+};
+
+const columnDefs = {
+  DOMAIN: [
+    commonColumns.seqNo,
+    commonColumns.destination,
+    commonColumns.role,
+    commonColumns.type,
+    commonColumns.createdBy,
+    commonColumns.created,
+    commonColumns.data,
+  ],
+  POOL: [
+    commonColumns.seqNo,
+    {
+      field: 'destination',
+      headerName: 'Node',
+      flex: 1,
+      floatingFilter: true,
+      filter: 'agTextColumnFilter',
+      minWidth: 150,
+    },
+    {
+      field: 'value.txn.data.data.client_ip',
+      headerName: 'Client IP',
+      flex: 1,
+      maxWidth: 150,
+      floatingFilter: true,
+      filter: 'agTextColumnFilter',
+      minWidth: 150,
+    },
+    {
+      field: 'value.txn.data.data.client_port',
+      headerName: 'Client Port',
+      flex: 1,
+      maxWidth: 175,
+      floatingFilter: true,
+      filter: 'agTextColumnFilter',
+      minWidth: 150,
+    },
+    {
+      field: 'value.txn.data.data.node_ip',
+      headerName: 'Node IP',
+      flex: 1,
+      maxWidth: 150,
+      floatingFilter: true,
+      filter: 'agTextColumnFilter',
+      minWidth: 150,
+    },
+    {
+      field: 'value.txn.data.data.node_port',
+      headerName: 'Node Port',
+      flex: 1,
+      maxWidth: 150,
+      floatingFilter: true,
+      filter: 'agTextColumnFilter',
+      minWidth: 150,
+    },
+    commonColumns.type,
+    commonColumns.createdBy,
+    commonColumns.created,
+  ],
+  DEFAULT: [
+    commonColumns.seqNo,
+    commonColumns.destination,
+    commonColumns.role,
+    commonColumns.type,
+    commonColumns.createdBy,
+    commonColumns.created,
+  ],
+};
+
+export { columnDefs };

@@ -1,0 +1,66 @@
+@import '~ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material-mixin';
+$border-color: #ebebeb;
+.ag-theme-material {
+  .ag-center-cols-viewport {
+    overflow: hidden;
+  }
+  .ag-row {
+    border-bottom-width: 0px !important;
+  }
+  .ag-cell-centered {
+    .ag-header-cell-label {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+  .ag-layout-auto-height .ag-center-cols-clipper,
+  .ag-layout-auto-height .ag-center-cols-container {
+    min-height: 47px;
+  }
+  .no-padding-cell {
+    padding: 0 0 !important;
+  }
+  .ag-header-cell-label {
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .ag-cell-value {
+    font-weight: 400;
+  }
+  div.ag-overlay-no-rows-wrapper.ag-layout-auto-height {
+    // padding-top: 40px !important;
+  }
+  .ag-header-row-floating-filter {
+    background-color: #f9f9fa;
+  }
+  .ag-floating-filter-body {
+    .ag-wrapper {
+      display: flex;
+      align-items: center;
+      input.ag-input-field-input {
+        padding: 0 !important;
+        height: 32px;
+      }
+    }
+  }
+  @include ag-theme-material(
+    (
+      font-family: (
+        'Montserrat',
+      ),
+      font-size: 12px,
+      row-hover-color: rgba(255, 255, 255, 0.12),
+      header-cell-hover-background-color: transparent,
+      range-selection-border-color: transparent,
+      header-height: 40px,
+      secondary-foreground-color: #aaaeb3,
+      border-color: $border-color,
+      borders-critical: $border-color,
+      borders-secondary: $border-color,
+      secondary-border-color: $border-color,
+      row-border-color: ag-derived(secondary-border-color),
+    )
+  );
+}

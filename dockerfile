@@ -18,6 +18,7 @@ ENV LOG_LEVEL ${LOG_LEVEL:-info}
 ENV RUST_LOG ${RUST_LOG:-warning}
 RUN npm install -g node-gyp
 
+ADD packages/client/build packages/client/build/
 ADD packages/model/build packages/model/build/
 COPY packages/model/package.json packages/model/package.json
 ADD scripts scripts/

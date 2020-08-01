@@ -23,6 +23,13 @@ services:
     volumes:
       - client-data:/home/indy/.indy_client
       - ./tmp:/tmp
+  vdr:
+    image: indy-vdr
+    depends_on:
+      - pg-db
+    command: 'indy-vdr-proxy -g config/genesis.txn -p 4000'
+    ports:
+      - 4000:4000
   webserver:
     image: indy-explorer
     depends_on:
@@ -51,6 +58,7 @@ services:
     volumes:
       - ./config:/home/indy/config
       - ./packages/model:/home/indy/packages/model
+      - ./packages/client:/home/indy/packages/client
       - webserver-cli:/home/indy/.indy-cli
       - webserver-ledger:/home/indy/ledger
     ports:
