@@ -1,7 +1,9 @@
-import { getConnection } from 'typeorm';
+import { getRepository } from 'typeorm';
 import { LedgerType, IndyTransaction, TransactionType } from 'model';
-import Transaction, { ITransaction } from '../entity/transaction';
-import { setLatest } from './pointer';
+import Transaction from '../entity/transaction';
+import { buildFilter } from './util';
+import { get } from 'lodash';
+import { ITransaction } from 'model';
 
 const transformToDbModel = (
   ledger: LedgerType,
@@ -48,6 +50,12 @@ const transformToDbModel = (
         destination: txn.data.data.name,
         source: txn.metadata.from,
       };
+    default:
+      return {
+        ...baseProps,
+        destination: txnId,
+        source: get(txn, 'metadata.from'),
+      };
   }
 };
 
@@ -55,29 +63,46 @@ export const getTransaction = async (
   ledger: LedgerType,
   sequence: number
 ): Promise<Transaction | undefined> => {
-  const repository = getConnection().getRepository(Transaction);
+  const repository = getRepository(Transaction);
   return await repository.findOne({
     sequence,
     ledger: ledger.valueOf(),
   });
 };
 
-export const addTransaction = async (
+export const createTransaction = (
   ledger: LedgerType,
   sequence: number,
   transaction: IndyTransaction
-): Promise<Transaction | undefined> => {
-  const repository = getConnection().getRepository(Transaction);
-  const record = repository.create(
-    transformToDbModel(ledger, sequence, transaction)
-  );
-  try {
-    console.log(
-      `ADDING TXN TO LEDGER ${ledger}: ${sequence} (id: ${transaction.txnMetadata.txnId})`
-    );
-    return await repository.save(record);
-  } catch (e) {
-    console.error(`DB ERROR WHILE SAVING: ${sequence}, error: ${e}`);
-    throw new Error(e);
-  }
+) => {
+  console.log('ADDING TRANSACTION', sequence);
+  const repository = getRepository(Transaction);
+  return repository.create(transformToDbModel(ledger, sequence, transaction));
+};
+
+export const saveTransactions = async (transactions: Array<Transaction>) => {
+  const repository = getRepository(Transaction);
+  return await repository.save(transactions, {
+    chunk: Math.min(transactions.length, 100),
+  });
+};
+
+export const queryTransactions = async (
+  ledgerType: LedgerType,
+  start: number = 0,
+  end: number = start + 1,
+  query: any = {},
+  sortBy: string = 'sequence',
+  sortMode: 'ASC' | 'DESC' = 'ASC'
+) => {
+  const repository = getRepository(Transaction);
+  const [data, totalRecords] = await repository.findAndCount({
+    where: { ledger: ledgerType.valueOf(), ...buildFilter(query) },
+    take: end - start || 1,
+    skip: start,
+    order: {
+      [sortBy]: sortMode,
+    },
+  });
+  return { totalRecords, data };
 };

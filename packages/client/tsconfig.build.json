@@ -16,9 +16,11 @@
     "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
-      "@shared/*": ["./src/components/shared/*"],
+      "@hooks/*": ["./src/hooks/*"],
       "@pages/*": ["./src/components/pages/*"],
       "@query/*": ["./src/query/*"],
+      "@shared/*": ["./src/components/shared/*"],
+      "@store/*": ["./src/store/*"],
       "@util/*": ["./src/util/*"]
     }
   },

@@ -2,8 +2,8 @@ import { dateToString } from '@util/helper';
 import DataRenderer from './DataRenderer';
 
 const commonColumns = {
-  seqNo: {
-    field: 'seqno',
+  sequence: {
+    field: 'sequence',
     headerName: '#',
     width: 100,
     minWidth: 100,
@@ -21,7 +21,7 @@ const commonColumns = {
     minWidth: 250,
   },
   role: {
-    field: 'role',
+    field: 'roleName',
     headerName: 'Role',
     maxWidth: 200,
     floatingFilter: true,
@@ -29,7 +29,7 @@ const commonColumns = {
     minWidth: 150,
   },
   type: {
-    field: 'type',
+    field: 'transactionTypeName',
     headerName: 'Type',
     flex: 1,
     maxWidth: 125,
@@ -38,7 +38,7 @@ const commonColumns = {
     minWidth: 150,
   },
   createdBy: {
-    field: 'sourceid',
+    field: 'source',
     headerName: 'Created By',
     flex: 1,
     floatingFilter: true,
@@ -54,7 +54,7 @@ const commonColumns = {
     minWidth: 200,
   },
   data: {
-    colId: 'seqno',
+    colId: 'sequence',
     field: 'value',
     headerName: 'View Data',
     cellClass: 'ag-cell-centered',
@@ -69,7 +69,7 @@ const commonColumns = {
 
 const columnDefs = {
   DOMAIN: [
-    commonColumns.seqNo,
+    commonColumns.sequence,
     commonColumns.destination,
     commonColumns.role,
     commonColumns.type,
@@ -78,7 +78,7 @@ const columnDefs = {
     commonColumns.data,
   ],
   POOL: [
-    commonColumns.seqNo,
+    commonColumns.sequence,
     {
       field: 'destination',
       headerName: 'Node',
@@ -128,7 +128,7 @@ const columnDefs = {
     commonColumns.created,
   ],
   DEFAULT: [
-    commonColumns.seqNo,
+    commonColumns.sequence,
     commonColumns.destination,
     commonColumns.role,
     commonColumns.type,

@@ -25,8 +25,7 @@ declare module 'indy-sdk' {
   const buildGetNymRequest: (myDid: string, theirDid: string) => Promise<any>;
   const buildGetValidatorInfoRequest: (myDid: string) => Promise<any>;
 
-  const signAndSubmitRequest: (
-    pool: number | undefined,
+  const signRequest: (
     wh: number,
     did: string | undefined,
     request: any
@@ -41,8 +40,6 @@ declare module 'indy-sdk' {
   const listPools: () => Promise<Array<any>>;
 
   const closeWallet: (wh: number) => Promise<void>;
-
-  const submitRequest: (pool: number | undefined, request: any) => Promise<any>;
 
   const setProtocolVersion: (version: number) => Promise<void>;
 }

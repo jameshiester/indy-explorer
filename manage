@@ -297,23 +297,10 @@ case "${COMMAND}" in
       initEnv "$@"
       docker-compose \
         --log-level ERROR up \
-        -d webserver node1 node2 node3 node4 vdr
+        -d webserver pg-db node1 node2 node3 node4 
       logs
       echo 'Want to see the scrolling container logs? Run "./manage logs"'
     ;;
-  start-remote)
-      initEnv "$@"
-      if [ -z "$LEDGER_SEED" ]; then
-        export ANONYMOUS=1
-      fi
-      if [ -z "$GENESIS_URL" ]; then
-        export GENESIS_URL=http://greenlight.bcovrin.vonx.io/genesis
-      fi
-      docker-compose \
-        --log-level ERROR up \
-        -d webserver
-      logs webserver
-      ;;
   start-web)
       initEnv "$@"
       if [ -z "$LEDGER_SEED" ]; then
@@ -321,7 +308,7 @@ case "${COMMAND}" in
       fi
       docker-compose \
         --log-level ERROR up \
-        -d webserver
+        -d webserver pg-db
       logs webserver
     ;;
   cli)
@@ -347,11 +334,12 @@ case "${COMMAND}" in
     ;;
   build)
       lerna run build
-      docker build $(initDockerBuildArgs) -f dockerfile -t indy-explorer .
-      docker build $(initDockerBuildArgs) -f vdr/dockerfile -t indy-vdr .
+      docker build $(initDockerBuildArgs) -f docker/server.dockerfile -t indy-explorer .
+      docker build $(initDockerBuildArgs) -f docker/node.dockerfile -t indy-explorer-node .
     ;;
   rebuild)
-      docker build $(initDockerBuildArgs) --no-cache -f dockerfile -t indy-explorer .
+      docker build $(initDockerBuildArgs) --no-cache -f docker/server.dockerfile -t indy-explorer .
+      docker build $(initDockerBuildArgs) --no-cache -f docker/node.dockerfile -t indy-explorer-node .
     ;;
   dockerhost)
       echo -e \\n"DockerHost: ${DOCKERHOST}"\\n

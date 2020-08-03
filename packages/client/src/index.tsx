@@ -6,25 +6,29 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { SnackbarProvider } from 'notistack';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store';
 
 import Theme from './util/Theme';
 ReactDOM.render(
   <React.StrictMode>
-    <Theme>
-      <SnackbarProvider
-        autoHideDuration={2000}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        maxSnack={3}
-      >
-        <CssBaseline />
-        <Router>
-          <App />
-        </Router>
-      </SnackbarProvider>
-    </Theme>
+    <Provider store={store}>
+      <Theme>
+        <SnackbarProvider
+          autoHideDuration={2000}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          maxSnack={3}
+        >
+          <CssBaseline />
+          <Router>
+            <App />
+          </Router>
+        </SnackbarProvider>
+      </Theme>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

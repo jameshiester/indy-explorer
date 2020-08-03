@@ -7,6 +7,7 @@ import Select from '@shared/form/select';
 import { get, cloneDeep } from 'lodash';
 import { columnDefs } from './types';
 import { GridApi, GridReadyEvent, IGetRowsParams } from 'ag-grid-community';
+import { useGetRows } from '@util/grid';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const gridOptions = {
   domLayout: 'autoHeight',
-  getRowNodeId: (val: any) => val.seqno,
+  getRowNodeId: (val: any) => val.sequence,
   rowModelType: 'infinite',
   cacheBlockSize: 250,
   blockLoadDebounceMillis: 50,
@@ -38,14 +39,18 @@ const ledgers = [
   { value: 'AUDIT', label: 'Audit Ledger' },
 ];
 
+const mapColIdToField = (colId: string) => get(colId.split('::'), '[1]');
+
 const List = () => {
   const classes = useStyles();
   const [ledger, setLedger] = useState(ledgers[0].value);
+  const [url, setUrl] = useState(`/api/ledger/${ledgers[0].value}`);
   const [columns, setColumns] = useState(get(columnDefs, 'DEFAULT'));
   //const { data: transactions } = useTransactions(ledger);
   const [gridApi, setGridApi] = useState<GridApi>();
   const handleLedgerChange = (event: any) => {
     setLedger(get(event, 'target.value'));
+    setUrl(`/api/ledger/${get(event, 'target.value')}`);
   };
 
   useEffect(() => {
@@ -61,32 +66,38 @@ const List = () => {
   const handleGridReady = useCallback((event: GridReadyEvent) => {
     setGridApi(event.api);
   }, []);
-  const getRows = useCallback(
-    async (params: IGetRowsParams) => {
-      const sortModel = get(params.sortModel, '[0]', {});
-      const { colId, sort: sortMode = 'ASC' } = sortModel;
-      const jsonQuery = Object.keys(params.filterModel).reduce(
-        (acc: any, key) => {
-          const field = get(key.split('::'), '[1]');
-          return { ...acc, [field]: params.filterModel[key] };
-        },
-        {}
-      );
-      const sortString = colId
-        ? `&sortBy=${get(
-            colId.split('::'),
-            '[1]'
-          )}&sortMode=${sortMode.toUpperCase()}`
-        : '';
-      const query = encodeURIComponent(JSON.stringify(jsonQuery));
-      const request = await fetch(
-        `/api/ledger/${ledger}?mode=INFINITE&startRow=${params.startRow}&endRow=${params.endRow}&query=${query}${sortString}`
-      );
-      const { totalRecords, data } = await request.json();
-      params.successCallback(data, totalRecords);
-    },
-    [ledger]
-  );
+  const getRows = useGetRows({
+    url,
+    mapColIdToField,
+    defaultSortField: 'sequence',
+  });
+
+  // const getRows = useCallback(
+  //   async (params: IGetRowsParams) => {
+  //     const sortModel = get(params.sortModel, '[0]', {});
+  //     const { colId, sort: sortMode = 'ASC' } = sortModel;
+  //     const jsonQuery = Object.keys(params.filterModel).reduce(
+  //       (acc: any, key) => {
+  //         const field = get(key.split('::'), '[1]');
+  //         return { ...acc, [field]: params.filterModel[key] };
+  //       },
+  //       {}
+  //     );
+  //     const sortString = colId
+  //       ? `&sortBy=${get(
+  //           colId.split('::'),
+  //           '[1]'
+  //         )}&sortMode=${sortMode.toUpperCase()}`
+  //       : '';
+  //     const query = encodeURIComponent(JSON.stringify(jsonQuery));
+  //     const request = await fetch(
+  //       `/api/ledger/${ledger}?mode=INFINITE&startRow=${params.startRow}&endRow=${params.endRow}&query=${query}${sortString}`
+  //     );
+  //     const { totalRecords, data } = await request.json();
+  //     params.successCallback(data, totalRecords);
+  //   },
+  //   [ledger]
+  // );
 
   useEffect(() => {
     if (getRows && gridApi) {

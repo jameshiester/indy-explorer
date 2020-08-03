@@ -6,12 +6,12 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { useVisualizer } from '@query/visualizer';
 
 const mapTransactions = (txn: any, data: any[] = []): any => {
-  const children = data.filter((item) => item.sourceid === txn.destination);
+  const children = data.filter((item) => item.source === txn.destination);
   return {
-    name: txn.sourceid || 'Trustee',
+    name: txn.source || 'Trustee',
 
-    type: txn.txntype,
-    seqno: txn.seqno,
+    type: txn.transactionTypeName,
+    sequence: txn.sequence,
     children: children
       ? children.map((child: any) => mapTransactions(child, data))
       : undefined,
@@ -36,7 +36,7 @@ const Visualize = () => {
     );
     series.current.dataFields.linkWith = 'linkWith';
     series.current.dataFields.name = 'name';
-    series.current.dataFields.id = 'seqno';
+    series.current.dataFields.id = 'sequence';
     series.current.dataFields.value = 'value';
     series.current.dataFields.color = 'color';
     series.current.dataFields.children = 'children';

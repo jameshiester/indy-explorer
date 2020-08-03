@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "install": "lerna bootstrap --ignore server && cd packages/server && npm install"
+    "install-deps": "lerna bootstrap --ignore server && cd packages/server && npm install"
   },
   "devDependencies": {
     "@types/express": "^4.17.6",
@@ -10,6 +10,8 @@
     "@types/lodash": "^4.14.155",
     "@types/node": "^14.0.11",
     "@types/react-router-dom": "^5.1.5",
+    "@types/redux-logger": "^3.0.8",
+    "@types/redux-thunk": "^2.1.0",
     "@types/socket.io": "^2.1.10",
     "@types/uuid": "^8.0.0",
     "craco-alias": "^2.1.1",

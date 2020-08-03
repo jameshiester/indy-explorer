@@ -15,7 +15,7 @@ export const durationInWords = (s: number) => {
     duration.hours = undefined;
   }
   if (duration.months) {
-    duration.days = undefined;
+    duration.hours = undefined;
   }
   if (duration.years) {
     duration.weeks = undefined;
@@ -24,7 +24,5 @@ export const durationInWords = (s: number) => {
 };
 
 export const dateToString = (s: number) => format(s, 'MMM d, yyyy pp');
-
-export const convertToRole = (s: string) => get(INDY_ROLE_TYPES, s, 'USER');
 
 export const convertToType = (s: string) => get(INDY_TXN_TYPES, s);

@@ -1,23 +1,38 @@
-import { Entity, PrimaryColumn, Column, BeforeInsert } from 'typeorm';
-import { TransactionType, IndyTransaction, IndyRoleType } from 'model';
-
-export interface ITransaction {
-  added?: number;
-  sequence: number;
-  ledger: number;
-  transactionType?: TransactionType;
-  role?: IndyRoleType;
-  transactionId?: string;
-  value?: IndyTransaction;
-  source?: string;
-  destination?: string;
-}
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  BeforeInsert,
+  AfterLoad,
+} from 'typeorm';
+import {
+  TransactionType,
+  IndyTransaction,
+  IndyRoleType,
+  ITransaction,
+} from 'model';
+import { mapTransactionTypeToName, mapRoleTypeToName } from '../util';
 
 @Entity()
 class Transaction implements ITransaction {
   @BeforeInsert()
   updateDates() {
     this.added = Date.now();
+  }
+
+  @BeforeInsert()
+  mapTransactionType() {
+    this.transactionTypeName = mapTransactionTypeToName(this.transactionType);
+  }
+
+  @BeforeInsert()
+  mapRoleType() {
+    this.roleName = mapRoleTypeToName(this.role);
+  }
+
+  @AfterLoad()
+  parseAdded() {
+    this.added = Number(this.added);
   }
 
   @PrimaryColumn('int')
@@ -30,7 +45,13 @@ class Transaction implements ITransaction {
   transactionType?: TransactionType;
 
   @Column({ nullable: true })
+  transactionTypeName?: string;
+
+  @Column({ nullable: true })
   role?: IndyRoleType;
+
+  @Column({ nullable: true })
+  roleName?: string;
 
   @Column({ nullable: true })
   transactionId?: string;

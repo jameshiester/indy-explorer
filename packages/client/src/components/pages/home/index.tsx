@@ -3,12 +3,12 @@ import Box from '@material-ui/core/Box';
 import Nav from './Nav';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import ValidatorList from './validator';
-import Transactions from './transaction/List';
+import Transactions from './transaction';
 import Visualize from './visualize';
 
 const Home: React.FC = () => {
   return (
-    <Box mx={4} my={12}>
+    <Box mx={4} my={2}>
       <Nav
         tabs={[
           { text: 'Validators', to: '/validators' },

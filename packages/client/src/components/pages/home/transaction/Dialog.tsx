@@ -48,12 +48,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const fields = [
-  { label: 'Transaction Type', field: 'type' },
-  { label: 'Created By', field: 'sourceid' },
+  { label: 'Transaction Type', field: 'transactionTypeName' },
+  { label: 'Created By', field: 'source' },
   {
     label: 'Created',
     field: 'added',
-    formatter: (value?: any) => (value ? dateToString(value) : undefined),
+    formatter: (value?: any) =>
+      value ? dateToString(Number(value)) : undefined,
   },
   { label: 'Transaction ID', field: 'value.txnMetadata.txnId' },
 ];
@@ -82,7 +83,7 @@ export interface DataDialogProps {
 }
 
 const getFields = (data: any) => {
-  return get(typeFields, data.type, []);
+  return get(typeFields, data.transactionTypeName, []);
 };
 
 const DataDialog: React.FC<DataDialogProps> = ({

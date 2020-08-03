@@ -1,6 +1,13 @@
 # Indy Explorer
 
-This project contains a web api and user interface to explore a Hyperledger Indy network.
+- [Introduction](#introduction)
+- [Getting Started](#getting-started)
+
+## Introduction
+
+This project contains a web api and user interface to explore a Hyperledger Indy network. It uses an Indy-VDR http proxy to fetch data from the network.
+
+## Getting Started
 
 ### Prerequisites
 
@@ -15,6 +22,10 @@ The rest of the steps assume you are in your bash terminal in a folder where Git
 - git clone git push -u origin master
 - cd indy-explorer
 - npm install -g lerna
-- lerna bootstrap
+- npm run install-deps
 - ./manage build
 - ./manage start
+
+### Additional Configuration
+
+This project creates a local network by default, however you can also run against a remote network by setting the GENESIS_URL environment variable. Example usage: ./manage start-web GENESIS_URL=http://greenlight.bcovrin.vonx.io/genesis. Currently, the ledger seed will be set to 000000000000000000000000Trustee1. You can overrid this by setting the LEDGER_SEED variable. Anonymous mode is still in progress.

@@ -10,84 +10,41 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
     networks:
       - von
-  client:
-    image: indy-explorer
-    command: "bash -c './scripts/start_client.sh'"
-    environment:
-      - IP=${IP}
-      - IPS=${IPS}
-      - DOCKERHOST=${DOCKERHOST}
-      - RUST_LOG=${RUST_LOG}
-    networks:
-      - von
-    volumes:
-      - client-data:/home/indy/.indy_client
-      - ./tmp:/tmp
-  vdr:
-    image: indy-vdr
-    depends_on:
-      - pg-db
-    command: 'indy-vdr-proxy -g config/genesis.txn -p 4000'
-    ports:
-      - 4000:4000
   webserver:
     image: indy-explorer
     depends_on:
       - pg-db
-    command: "bash -c 'sleep 15; ./scripts/start_webserver.sh;'"
+    command: "bash -c 'sleep 100; ./scripts/start_webserver.sh;'"
     environment:
+      - ANONYMOUS=${ANONYMOUS}
       - DOCKERHOST=${DOCKERHOST}
+      - GENESIS_URL=${GENESIS_URL}
       - IP=${IP}
       - IPS=${IPS}
+      - LEDGER_CACHE_PATH=${LEDGER_CACHE_PATH}
+      - LEDGER_INSTANCE_NAME=${LEDGER_INSTANCE_NAME:-localhost}
+      - LEDGER_SEED=${LEDGER_SEED}
+      - LOG_LEVEL=${LOG_LEVEL}
+      - MAX_FETCH=${MAX_FETCH:-50000}
       - POSTGRES_DB=${POSTGRES_DB:-postgres}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-root}
       - POSTGRES_PORT=${POSTGRES_PORT:-5432}
       - POSTGRES_USER=${POSTGRES_USER:-postgres}
-      - LOG_LEVEL=${LOG_LEVEL}
-      - RUST_LOG=${RUST_LOG}
-      - GENESIS_URL=${GENESIS_URL}
-      - ANONYMOUS=${ANONYMOUS}
-      - LEDGER_SEED=${LEDGER_SEED}
-      - LEDGER_CACHE_PATH=${LEDGER_CACHE_PATH}
-      - MAX_FETCH=${MAX_FETCH:-50000}
-      - RESYNC_TIME=${RESYNC_TIME:-120000}
       - REGISTER_NEW_DIDS=${REGISTER_NEW_DIDS:-True}
-      - LEDGER_INSTANCE_NAME=${LEDGER_INSTANCE_NAME:-localhost}
+      - RESYNC_TIME=${RESYNC_TIME:-120000}
+      - RUST_LOG=${RUST_LOG}
     networks:
       - von
     volumes:
-      - ./config:/home/indy/config
       - ./packages/model:/home/indy/packages/model
       - ./packages/client:/home/indy/packages/client
       - webserver-cli:/home/indy/.indy-cli
-      - webserver-ledger:/home/indy/ledger
+      - node1-data:/home/indy/ledger
     ports:
       - ${WEB_SERVER_HOST_PORT:-9000}:8000
-  nodes:
-    image: indy-explorer
-    command: "bash -c './scripts/start_nodes.sh'"
-    networks:
-      - von
-    ports:
-      - 9701:9701
-      - 9702:9702
-      - 9703:9703
-      - 9704:9704
-      - 9705:9705
-      - 9706:9706
-      - 9707:9707
-      - 9708:9708
-    environment:
-      - IP=${IP}
-      - IPS=${IPS}
-      - DOCKERHOST=${DOCKERHOST}
-      - LOG_LEVEL=${LOG_LEVEL}
-      - RUST_LOG=${RUST_LOG}
-    volumes:
-      - nodes-data:/home/indy/ledger
-
+      - 4000:4000
   node1:
-    image: indy-explorer
+    image: indy-explorer-node
     command: "bash -c './scripts/start_node.sh 1'"
     networks:
       - von
@@ -104,7 +61,7 @@ services:
       - node1-data:/home/indy/ledger
 
   node2:
-    image: indy-explorer
+    image: indy-explorer-node
     command: "bash -c './scripts/start_node.sh 2'"
     networks:
       - von
@@ -121,7 +78,7 @@ services:
       - node2-data:/home/indy/ledger
 
   node3:
-    image: indy-explorer
+    image: indy-explorer-node
     command: "bash -c './scripts/start_node.sh 3'"
     networks:
       - von
@@ -138,7 +95,7 @@ services:
       - node3-data:/home/indy/ledger
 
   node4:
-    image: indy-explorer
+    image: indy-explorer-node
     command: "bash -c './scripts/start_node.sh 4'"
     networks:
       - von

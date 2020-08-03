@@ -1,15 +1,11 @@
 import { useSnackbar } from 'notistack';
 import { useQuery } from 'react-query';
 import { get } from 'lodash';
-import { convertToRole } from '@util/helper';
+import axios from 'axios';
+import { ITransaction } from 'model';
 
 const getSource = (txn: any) => {
-  return get(txn, 'sourceid');
-};
-
-const getRole = (txn: any) => {
-  const role = get(txn, 'raw.txn.data.role');
-  return role ? `(${convertToRole(role)})` : '(USER)';
+  return get(txn, 'source');
 };
 
 const getColor = (type: string) => {
@@ -25,7 +21,7 @@ const getColor = (type: string) => {
 const TRANSACTIONS_KEY = 'bc-transactions';
 
 const mapTxn = (txn: any, data: any[]): any => {
-  const type = get(txn, 'type');
+  const type = get(txn, 'transactionTypeName');
   const dest = get(txn, 'destination');
   const children = data.filter((item) => {
     const source = getSource(item);
@@ -33,9 +29,9 @@ const mapTxn = (txn: any, data: any[]): any => {
     return source === dest && source !== get(item, 'destination');
   });
   return {
-    type: get(txn, 'type'),
+    type: get(txn, 'transactionTypeName'),
     name: dest,
-    role: get(txn, 'role', 'n/a'),
+    role: get(txn, 'roleName', 'n/a'),
     color: getColor(type),
     children: children
       ? children.map((child) => mapTxn(child, data))
@@ -44,7 +40,7 @@ const mapTxn = (txn: any, data: any[]): any => {
 };
 
 const mapData = (data: any[]) => {
-  const root = data.find((txn) => !get(txn, 'sourceid'));
+  const root = data.find((txn) => !get(txn, 'source'));
   if (root) {
     return mapTxn(root, data);
   }
@@ -53,12 +49,13 @@ const mapData = (data: any[]) => {
 export const useVisualizer = (ledger: string = 'domain') => {
   const { enqueueSnackbar } = useSnackbar();
   const queryFn = async (...args: any[]) => {
-    const response = await fetch(`/api/ledger/${ledger}?page_size=100`);
-    if (response.ok) {
-      const result = await response.json();
-      return result;
-    } else {
-      throw `Failed to reach Transaction service`;
+    try {
+      const response = await axios.get<{ data: Array<ITransaction> }>(
+        `/api/ledger/${ledger}?page_size=100`
+      );
+      return response.data.data;
+    } catch (e) {
+      throw new Error(`Failed to reach Transaction service`);
     }
   };
   const { data } = useQuery({

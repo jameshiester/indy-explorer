@@ -7,24 +7,7 @@ import {
   LedgerType,
 } from 'model';
 import { DEFAULT_PROTOCOL } from './constant';
-
-export const buildGetTxnRequest = async (
-  did: string,
-  ledger: LedgerType,
-  sequence: number
-) => {
-  try {
-    const data = await indy.buildGetTxnRequest(
-      did,
-      ledger.valueOf().toString(),
-      sequence
-    );
-    return { success: true, data };
-  } catch (e) {
-    console.error('INDY ERROR:', e);
-    return { success: false, error: e };
-  }
-};
+import { submitRequestToLedger } from '../vdr';
 
 export const buildGetNymRequest = async (
   myDid: string,
@@ -64,7 +47,6 @@ export const listPools = async (): Promise<
 };
 
 export const submitRequest = async <T>(
-  pool: number | undefined,
   did: string | undefined,
   request: any,
   sign: boolean,
@@ -75,22 +57,16 @@ export const submitRequest = async <T>(
     if (sign) {
       const wh = await indy.openWallet(config, credentials);
       try {
-        const response = await indy.signAndSubmitRequest(
-          pool,
-          wh,
-          did,
-          request
-        );
+        const signedRequest = await indy.signRequest(wh, did, request);
         await indy.closeWallet(wh);
-        return { success: true, data: response };
+        return await submitRequestToLedger(signedRequest);
       } catch (e) {
         console.log(e);
         await indy.closeWallet(wh);
         return { success: false, error: e };
       }
     } else {
-      const response = await indy.submitRequest(pool, request);
-      return { success: true, data: response };
+      return await submitRequestToLedger(request);
     }
   } catch (e) {
     console.log(e);

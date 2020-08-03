@@ -1,4 +1,4 @@
-FROM bcgovimages/von-image:node-1.12-3
+FROM bcgovimages/von-image:next-1
 
 USER root
 RUN apt-get update && \

@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import Card from '@material-ui/core/Card';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@shared/table';
 import { durationInWords } from '@util/helper';
-import { useValidators } from '@query/validators';
 import DataRenderer from './DataRenderer';
+import { GridApi, GridReadyEvent } from 'ag-grid-community';
+import { useSelector } from 'react-redux';
+import { nodesSelector } from '@store/node/selector';
+import { INode } from 'model';
+import StatusRenderer from './StatusRenderer';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,11 +22,23 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const gridOptions = {
   domLayout: 'autoHeight',
-  getRowNodeId: (val: any) => val.seqno,
+  getRowNodeId: (val: any) => val.name,
+  pagination: true,
+  paginationPageSize: 250,
+  immutableData: true,
 };
 
 const columns = [
+  {
+    field: 'active',
+    headerName: 'Status',
+    flex: 1,
+    maxWidth: 120,
+    minWidth: 120,
+    cellRendererFramework: StatusRenderer,
+  },
   { field: 'name', headerName: 'Name', flex: 1 },
+
   { field: 'did', headerName: 'DID', width: 400, maxWidth: 400, minWidth: 400 },
   {
     field: 'uptime_seconds',
@@ -34,11 +50,6 @@ const columns = [
     field: 'indy_version',
     headerName: 'Indy',
     valueFormatter: ({ value }: any) => (value ? `v${value}` : undefined),
-  },
-  {
-    field: 'transaction_count.ledger',
-    headerName: 'Ledger',
-    valueFormatter: ({ value }: any) => (value ? `${value} TXNs` : undefined),
   },
   {
     colId: 'data',
@@ -56,10 +67,19 @@ const columns = [
 
 const List = () => {
   const classes = useStyles();
-  const { data: validators } = useValidators();
+  const [gridApi, setGridApi] = useState<GridApi>();
+  const handleGridReady = useCallback((event: GridReadyEvent) => {
+    setGridApi(event.api);
+  }, []);
+  const data: Array<INode> | undefined = useSelector(nodesSelector);
   return (
     <Card className={classes.root}>
-      <Grid data={validators} columnDefs={columns} gridOptions={gridOptions} />
+      <Grid
+        data={data}
+        onGridReady={handleGridReady}
+        columnDefs={columns}
+        gridOptions={gridOptions}
+      />
     </Card>
   );
 };

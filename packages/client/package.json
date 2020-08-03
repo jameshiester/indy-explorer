@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:9000",
   "dependencies": {
     "@amcharts/amcharts4": "^4.9.34",
     "@craco/craco": "^5.6.4",
@@ -16,15 +17,22 @@
     "@types/react-dom": "^16.9.8",
     "ag-grid-community": "^23.2.1",
     "ag-grid-react": "^23.2.1",
+    "axios": "^0.19.2",
     "craco-alias": "^2.1.1",
     "date-fns": "^2.15.0",
+    "model": "file:../model",
     "node-sass": "^4.14.1",
     "notistack": "^0.9.17",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-query": "^2.5.10",
+    "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
+    "reselect": "^4.0.0",
+    "socket.io-client": "^2.3.0",
     "typescript": "^3.7.5"
   },
   "scripts": {
@@ -47,5 +55,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-redux": "^7.1.9",
+    "@types/socket.io-client": "^1.4.33"
   }
 }
