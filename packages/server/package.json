@@ -9,7 +9,6 @@
     "test": "jest"
   },
   "author": "James Hiester",
-  "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
     "better-sqlite3": "^7.1.0",

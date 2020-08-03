@@ -7,6 +7,5 @@
   "scripts": {
     "build": "tsc"
   },
-  "author": "James Hiester",
-  "license": "ISC"
+  "author": "James Hiester"
 }
