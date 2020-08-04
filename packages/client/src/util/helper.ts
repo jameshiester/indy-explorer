@@ -23,6 +23,9 @@ export const durationInWords = (s: number) => {
   return formatDuration(duration);
 };
 
-export const dateToString = (s: number) => format(s, 'MMM d, yyyy pp');
+export const dateToString = (
+  s: number,
+  formatString: string = 'MMM d, yyyy pp'
+) => format(s, formatString);
 
 export const convertToType = (s: string) => get(INDY_TXN_TYPES, s);

@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import { get } from 'lodash';
 import Divider from '@material-ui/core/Divider';
 import { dateToString, durationInWords } from '@util/helper';
+import NodeHistory from './NodeHistory';
 
 const useStyles = makeStyles((theme: Theme) => ({
   title: {
@@ -166,6 +167,11 @@ const DataDialog: React.FC<DataDialogProps> = ({
               )
           )}
         </Grid>
+        <Typography variant="h6" className={classes.sectionLabel}>
+          Node Status
+        </Typography>
+        <Divider style={{ marginBottom: 8 }} />
+        <NodeHistory name={data.name} />
         <div
           className={classes.subSection}
           style={{ wordWrap: 'break-word', wordBreak: 'break-all' }}
