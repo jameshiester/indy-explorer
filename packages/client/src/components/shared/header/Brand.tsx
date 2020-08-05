@@ -9,6 +9,7 @@ const useStyles = useStylesFactory((theme: Theme) => ({
     color: theme.palette.text.primary,
     textTransform: 'uppercase',
     paddingRight: theme.spacing(2),
+    fontFamily: 'Archivo',
     borderRight: `1px solid ${theme.palette.divider}`,
   },
   container: {

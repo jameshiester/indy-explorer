@@ -33,6 +33,7 @@ services:
       - REGISTER_NEW_DIDS=${REGISTER_NEW_DIDS:-True}
       - RESYNC_TIME=${RESYNC_TIME:-120000}
       - RUST_LOG=${RUST_LOG}
+      - HEADER_BRAND=${HEADER_BRAND:-Hyperledger Indy}
     networks:
       - von
     volumes:

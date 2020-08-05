@@ -31,7 +31,7 @@ const container = (spacing: Function) => ({
     paddingRight: spacing(4),
   },
 });
-
+const title = process.env.REACT_APP_HEADER_BRAND || 'HYPERLEDGER INDY';
 const useStyles = useStylesFactory(({ spacing, palette }) => ({
   root: {
     position: 'relative',
@@ -54,7 +54,7 @@ const Header: React.FC = () => {
   return (
     <AppBar className={classes.root}>
       <Toolbar className={classes.container}>
-        <Brand brand={'Hyperledger Indy'} />
+        <Brand brand={title} />
       </Toolbar>
     </AppBar>
   );
