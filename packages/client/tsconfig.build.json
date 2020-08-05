@@ -16,6 +16,7 @@
     "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
+      "@context/*": ["./src/context/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@pages/*": ["./src/components/pages/*"],
       "@query/*": ["./src/query/*"],

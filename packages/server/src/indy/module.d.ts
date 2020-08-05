@@ -23,7 +23,7 @@ declare module 'indy-sdk' {
   ) => Promise<[string, string]>;
 
   const buildGetNymRequest: (myDid: string, theirDid: string) => Promise<any>;
-  const buildGetValidatorInfoRequest: (myDid: string) => Promise<any>;
+  const buildGetValidatorInfoRequest: (myDid?: string) => Promise<any>;
 
   const signRequest: (
     wh: number,

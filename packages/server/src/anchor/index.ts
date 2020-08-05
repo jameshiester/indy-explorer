@@ -4,6 +4,7 @@ import {
   LedgerType,
   IndyValidatorStatus,
   NODE_UPDATE,
+  INode,
 } from 'model';
 import { get } from 'lodash';
 import {
@@ -19,6 +20,7 @@ import { createOrUpdateNodes } from '../repository/node';
 import { syncLedgerCache } from '../sync/transaction';
 import { createOrUpdateNodeStatuses } from '../repository/nodestatus';
 import { Server } from 'socket.io';
+import saveNodes from '../sync/node';
 
 const DEFAULT_SEED = '000000000000000000000000Trustee1';
 const DEFAULT_MAX_FETCH = 50000;
@@ -101,38 +103,30 @@ export class Anchor {
     const validatorInfo = this._did
       ? await this.getPermissionedValidatorInfo()
       : await this.getAnonymousValidatorInfo();
-    try {
-      const nodes = await createOrUpdateNodes(
-        validatorInfo.map(({ name, active, value }) => ({
-          active,
-          value: value ? value.result.data : undefined,
-          name,
-        }))
-      );
-      await createOrUpdateNodeStatuses(nodes, Date.now());
-      nodes.forEach((node) => this._io.emit(NODE_UPDATE, node));
-      console.log('VALDIATOR STATUS SYNCED');
-    } catch (e) {
-      console.log('FAILED TO SAVE VALIDATOR INFO', e);
-    }
+    await saveNodes(validatorInfo, this._io);
   }
 
-  async getPermissionedValidatorInfo(): Promise<
-    Array<{ active: boolean; value?: IndyValidatorStatus; name: string }>
-  > {
+  async getPermissionedValidatorInfo(): Promise<Array<INode>> {
     const request = await buildGetValidatorInfoRequest(this._did);
     const response = (await this.submitRequest(request, true)) as any;
     return Object.keys(response).map((name) => {
       if (response[name] === 'timeout') {
         return { name, active: false };
       }
-      return { name, value: JSON.parse(response[name]), active: true };
+      let value;
+      try {
+        value = get(JSON.parse(response[name]), 'result.data');
+      } catch (e) {
+        console.warn('INVALID NODE JSON', value);
+      }
+      return { name, value, active: true };
     });
   }
 
-  async getAnonymousValidatorInfo(): Promise<
-    Array<{ active: boolean; value?: IndyValidatorStatus; name: string }>
-  > {
+  async getAnonymousValidatorInfo(): Promise<Array<INode>> {
+    const request = await buildGetValidatorInfoRequest();
+    const response = (await this.submitRequest(request)) as any;
+    console.log(response);
     return [];
   }
 

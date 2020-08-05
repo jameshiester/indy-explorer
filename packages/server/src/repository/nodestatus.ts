@@ -8,12 +8,23 @@ export const createOrUpdateNodeStatuses = async (
 ): Promise<Array<NodeStatus>> => {
   try {
     const repository = getRepository(NodeStatus);
-    const records = nodes.map(({ name, indy_version, active }) => {
-      return repository.create({ name, indy_version, active, timestamp });
+    const records = nodes.map(({ name, indy_version, active, value }) => {
+      return repository.create({
+        name,
+        indy_version,
+        active,
+        timestamp,
+        read_throughput: value
+          ? value.Node_info.Metrics['average-per-second']['read-transactions']
+          : undefined,
+        write_throughput: value
+          ? value.Node_info.Metrics['average-per-second']['write-transactions']
+          : undefined,
+      });
     });
     return await repository.save(records);
   } catch (e) {
-    console.error(`DB ERROR WHILE SAVING NODE STATUSES, error: ${e}`);
+    console.log(`DB ERROR WHILE SAVING NODE STATUSES, error: ${e}`);
     throw new Error(e);
   }
 };

@@ -1,19 +1,18 @@
 import { getRepository } from 'typeorm';
-import { IndyValidatorData } from 'model';
+import { INode } from 'model';
 import IndyNode from '../entity/node';
 import { buildFilter } from './util';
 
 export const createOrUpdateNodes = async (
-  nodes: Array<{ name: string; active: boolean; value?: IndyValidatorData }>
+  nodes: Array<INode>
 ): Promise<Array<IndyNode>> => {
   try {
     const repository = getRepository(IndyNode);
-    const records = nodes.map((node) => {
-      return repository.create(node);
-    });
-    return await repository.save(records);
+    const records = repository.create(nodes);
+    const result = await repository.save(records);
+    return result;
   } catch (e) {
-    console.error(`DB ERROR WHILE SAVING: ${name}, error: ${e}`);
+    console.log(`DB ERROR WHILE SAVING error: ${e}`);
     throw new Error(e);
   }
 };

@@ -11,7 +11,7 @@ const Home: React.FC = () => {
     <Box mx={4} my={2}>
       <Nav
         tabs={[
-          { text: 'Validators', to: '/validators' },
+          { text: 'Nodes', to: '/nodes' },
           { text: 'Transactions', to: '/transactions' },
           { text: 'Visualizer', to: '/visualize' },
         ]}
@@ -20,13 +20,13 @@ const Home: React.FC = () => {
         <Route path={'/home/transactions'}>
           <Transactions />
         </Route>
-        <Route strict path={'/home/validators'}>
+        <Route strict path={'/home/nodes'}>
           <ValidatorList />
         </Route>
         <Route strict path={'/home/visualize'}>
           <Visualize />
         </Route>
-        <Redirect exact from="/home" to="/home/validators" />
+        <Redirect exact from="/home" to="/home/nodes" />
       </Switch>
     </Box>
   );

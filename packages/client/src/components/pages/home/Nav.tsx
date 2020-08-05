@@ -34,7 +34,7 @@ const Nav: React.FC<NavProps> = ({ tabs }) => {
   const { path } = useRouteMatch();
   const value = useTabsWithRouter(
     tabs.map((tab: any) => `${path}${tab.to}`),
-    `${path}/validators`
+    `${path}/nodes`
   );
 
   return (

@@ -52,7 +52,7 @@ export const syncLedgerCache = async (ledgerType: LedgerType) => {
         );
         complete = true;
       } else if (row.sequence < fetched) {
-        console.error('UNEXPECTED SEQUENCE', row.sequence, fetched);
+        console.log('UNEXPECTED SEQUENCE', row.sequence, fetched);
         complete = true;
       }
     } else {

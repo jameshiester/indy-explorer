@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,8 +7,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Grid from '@material-ui/core/Grid';
 import { get } from 'lodash';
 import Divider from '@material-ui/core/Divider';
-import { dateToString, durationInWords } from '@util/helper';
+import { durationInWords } from '@util/helper';
 import NodeHistory from './NodeHistory';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectedSelector, selectedNodeSelector } from '@store/node/selector';
+import { SET_SELECTED_NODE } from '@store/node/types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   title: {
@@ -90,23 +93,21 @@ const hasData = (data: any, field: string) => {
   return data || data === '0' || data === 0;
 };
 
-export interface DataDialogProps {
-  open: boolean;
-  onClose: (value: string) => void;
-  data: any;
-}
+export interface DataDialogProps {}
 
-const DataDialog: React.FC<DataDialogProps> = ({
-  onClose,
-  open,
-  data = {},
-}) => {
+const DataDialog: React.FC<DataDialogProps> = () => {
+  const selected = useSelector(selectedSelector);
+  const data = useSelector(selectedNodeSelector);
+  const dispatch = useDispatch();
   const classes = useStyles();
+  const handleClose = useCallback(() => {
+    dispatch({ type: SET_SELECTED_NODE });
+  }, [dispatch]);
   return (
     <Dialog
-      onClose={onClose}
+      onClose={handleClose}
       aria-labelledby="Transaction Data"
-      open={open}
+      open={Boolean(selected)}
       maxWidth={'md'}
       fullWidth
     >
@@ -167,23 +168,27 @@ const DataDialog: React.FC<DataDialogProps> = ({
               )
           )}
         </Grid>
-        <Typography variant="h6" className={classes.sectionLabel}>
-          Node Status
-        </Typography>
-        <Divider style={{ marginBottom: 8 }} />
-        <NodeHistory name={data.name} />
-        <div
-          className={classes.subSection}
-          style={{ wordWrap: 'break-word', wordBreak: 'break-all' }}
-        >
-          <Typography variant="h6" className={classes.sectionLabel}>
-            Raw
-          </Typography>
-          <Divider style={{ marginBottom: 12 }} />
-          <pre className={classes.raw}>
-            {JSON.stringify(data.value, null, 2)}
-          </pre>
-        </div>
+        {data && (
+          <>
+            <Typography variant="h6" className={classes.sectionLabel}>
+              Node Status
+            </Typography>
+            <Divider style={{ marginBottom: 8 }} />
+            <NodeHistory name={data.name} />
+            <div
+              className={classes.subSection}
+              style={{ wordWrap: 'break-word', wordBreak: 'break-all' }}
+            >
+              <Typography variant="h6" className={classes.sectionLabel}>
+                Raw
+              </Typography>
+              <Divider style={{ marginBottom: 12 }} />
+              <pre className={classes.raw}>
+                {JSON.stringify(data.value, null, 2)}
+              </pre>
+            </div>
+          </>
+        )}
       </DialogContent>
     </Dialog>
   );

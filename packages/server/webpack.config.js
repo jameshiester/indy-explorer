@@ -2,7 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 
-const { NODE_ENV = 'production' } = process.env;
+// development because of typeorm mapping
+const { NODE_ENV = 'development' } = process.env;
 module.exports = {
   entry: './src/index.ts',
   mode: NODE_ENV,

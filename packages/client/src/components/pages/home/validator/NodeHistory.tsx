@@ -27,25 +27,24 @@ const NodeHistory: React.FC<NodeHistoryProps> = ({ name }) => {
     chart.current.dateFormatter.inputDateFormat = 'yyyy-MM-dd HH:mm';
     let dateAxis = chart.current.xAxes.push(new DateAxis());
     let valueAxis = chart.current.yAxes.push(new ValueAxis());
-    valueAxis.max = 1;
+    valueAxis.max = 1.05;
     valueAxis.min = 0;
+    valueAxis.strictMinMax = true;
     valueAxis.title.text = 'Online';
+    valueAxis.renderer.grid.template.disabled = true;
+    valueAxis.renderer.labels.template.disabled = true;
+    var range = valueAxis.axisRanges.create();
+    range.value = 1;
+    range.label.text = 'Online';
+    var range2 = valueAxis.axisRanges.create();
+    range2.value = 0;
+    range2.label.text = 'Offline';
     // Create series
     series.current = chart.current.series.push(new LineSeries());
     series.current.dataFields.valueY = 'value';
     series.current.dataFields.dateX = 'date';
     series.current.tooltipText = '{date}';
     series.current.strokeWidth = 2;
-    series.current.minBulletDistance = 15;
-
-    // Make bullets grow on hover
-    let bullet = series.current.bullets.push(new CircleBullet());
-    bullet.circle.strokeWidth = 2;
-    bullet.circle.radius = 4;
-    bullet.circle.fill = am4core.color('#fff');
-
-    let bullethover = bullet.states.create('hover');
-    bullethover.properties.scale = 1.3;
 
     // Make a panning cursor
     chart.current.cursor = new XYCursor();
@@ -78,7 +77,7 @@ const NodeHistory: React.FC<NodeHistoryProps> = ({ name }) => {
   return (
     <div
       id={`node-history-${name}`}
-      style={{ width: '100%', height: 500 }}
+      style={{ width: '100%', height: 350 }}
     ></div>
   );
 };

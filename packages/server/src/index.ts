@@ -13,7 +13,9 @@ import { getLedgerTypeByName, buildQuery } from './util';
 import { queryNodes } from './repository/node';
 import IndyNode from './entity/node';
 import NodeStatus from './entity/nodestatus';
+import NodesStatusSummary from './entity/nodeSummary';
 import { getNodesStatus, getNodeStatuses } from './repository/nodestatus';
+import { getNodesStatusSummaries } from './repository/nodeSummary';
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -36,7 +38,7 @@ createConnection({
   database: POSTGRES_DB,
   synchronize: true,
   logging: false,
-  entities: [Pointer, Transaction, IndyNode, NodeStatus],
+  entities: [Pointer, Transaction, IndyNode, NodeStatus, NodesStatusSummary],
 }).then(async (connection) => {
   const anchor = new Anchor(io);
 
@@ -96,6 +98,21 @@ createConnection({
       try {
         const { since = 0 } = req.query;
         const data = await getNodesStatus(Number(since));
+        res.json(data);
+      } catch (e) {
+        console.log(e);
+        next(e);
+      }
+    } else {
+      next('Trust Anchor Not Ready');
+    }
+  });
+
+  app.get('/api/nodes/history/summary', async (req, res, next) => {
+    if (anchor.ready()) {
+      try {
+        const { since = 0 } = req.query;
+        const data = await getNodesStatusSummaries(Number(since));
         res.json(data);
       } catch (e) {
         console.log(e);

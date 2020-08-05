@@ -22,7 +22,7 @@ export const getTransactionFromLedger = async (
     }
     return undefined;
   } catch (e) {
-    console.error(
+    console.log(
       'FAILED TO GET TRANSACTION LEDGER',
       ledger,
       'SEQUENCE',
@@ -39,7 +39,7 @@ export const submitRequestToLedger = async (request: any) => {
     const response = await axios.post(`${VDR_URL}/submit`, request);
     return { success: true, data: response.data };
   } catch (e) {
-    console.error('SUBMIT REQUEST FAILED:', e);
+    console.log('SUBMIT REQUEST FAILED:', e);
     return { success: false, error: e };
   }
 };

@@ -1,5 +1,10 @@
 @import '~ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material-mixin';
 $border-color: #ebebeb;
+.ag-react-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
 .ag-theme-material {
   .ag-center-cols-viewport {
     overflow: hidden;

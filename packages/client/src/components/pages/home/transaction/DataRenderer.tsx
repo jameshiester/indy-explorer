@@ -4,6 +4,7 @@ import DataIcon from '@material-ui/icons/FindInPageOutlined';
 import Dialog from './Dialog';
 import IconButton from '@material-ui/core/IconButton';
 import { ICellRendererParams } from 'ag-grid-community';
+import DataButton from '@shared/button/DataButton';
 
 const InternalButton = memo(({ setOpen }: any) => {
   return (
@@ -33,10 +34,10 @@ const DialogRenderer = forwardRef(({ data }: ICellRendererParams, ref) => {
 
   return (
     data && (
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <InternalButton setOpen={handleClickOpen} />
+      <>
+        <DataButton handleClick={handleClickOpen} />
         {open && <Dialog open={open} onClose={handleClose} data={data} />}
-      </div>
+      </>
     )
   );
 });

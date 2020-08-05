@@ -149,6 +149,14 @@ export interface INode {
   uptime_seconds?: number;
 }
 
+export interface INodesStatusSummary {
+  id?: number;
+  timestamp?: number;
+  read_throughput?: number;
+  write_throughput?: number;
+  active?: number;
+}
+
 export interface IndyValidator {
   active: boolean;
   value: IndyValidatorStatus;

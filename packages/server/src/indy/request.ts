@@ -17,7 +17,7 @@ export const buildGetNymRequest = async (
 };
 
 export const buildGetValidatorInfoRequest = async (
-  myDid: string
+  myDid?: string
 ): Promise<any> => {
   return await indy.buildGetValidatorInfoRequest(myDid);
 };

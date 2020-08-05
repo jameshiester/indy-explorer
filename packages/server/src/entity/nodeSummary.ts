@@ -1,7 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, AfterLoad } from 'typeorm';
+import { INodesStatusSummary } from 'model';
 
 @Entity()
-class NodeStatus {
+class NodesStatusSummary implements INodesStatusSummary {
   @AfterLoad()
   parse() {
     this.timestamp = Number(this.timestamp);
@@ -10,14 +11,8 @@ class NodeStatus {
   @PrimaryGeneratedColumn()
   id?: number;
 
-  @Column()
-  name?: string;
-
   @Column('bigint')
   timestamp?: number;
-
-  @Column({ nullable: true })
-  indy_version?: string;
 
   @Column('decimal', { nullable: true })
   read_throughput?: number;
@@ -26,7 +21,7 @@ class NodeStatus {
   write_throughput?: number;
 
   @Column()
-  active?: boolean;
+  active?: number;
 }
 
-export default NodeStatus;
+export default NodesStatusSummary;

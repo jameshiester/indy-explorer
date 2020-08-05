@@ -15,7 +15,7 @@ ReactDOM.render(
     <Provider store={store}>
       <Theme>
         <SnackbarProvider
-          autoHideDuration={2000}
+          autoHideDuration={5000}
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'left',

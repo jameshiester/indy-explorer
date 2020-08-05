@@ -4,21 +4,29 @@ import Header from '@shared/header';
 import Home from '@pages/home';
 import { useSocket } from '@hooks/socket';
 import { useInit } from '@hooks/app';
+import { useNodeStatus } from '@hooks/notify';
+import SocketContext from './context/socket';
+import io from 'socket.io-client';
 
-function App() {
-  useSocket();
+const socket = io();
+
+const App = () => {
+  useSocket(socket);
+  useNodeStatus();
   useInit();
   return (
-    <div>
-      <Header />
-      <Switch>
-        <Route path="/home">
-          <Home />
-        </Route>
-        <Redirect exact from="/" to="/home" />
-      </Switch>
-    </div>
+    <SocketContext.Provider value={socket}>
+      <div>
+        <Header />
+        <Switch>
+          <Route path="/home">
+            <Home />
+          </Route>
+          <Redirect exact from="/" to="/home" />
+        </Switch>
+      </div>
+    </SocketContext.Provider>
   );
-}
+};
 
 export default App;
