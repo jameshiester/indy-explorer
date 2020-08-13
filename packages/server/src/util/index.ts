@@ -46,6 +46,49 @@ export const mapRoleTypeToName = (type?: string): string | undefined => {
   return role[0];
 };
 
+export interface BuildQueryParams {
+  endRow?: number;
+  mode: QueryMode;
+  page_size?: number;
+  page?: number;
+  query?: any;
+  sortBy: string;
+  sortMode: string;
+  startRow?: number;
+  defaultSortColumn: string;
+}
+
+export const buildQuery2 = ({
+  endRow,
+  mode,
+  page_size = 10000,
+  page = 1,
+  query = '{}',
+  defaultSortColumn,
+  sortBy = defaultSortColumn,
+  sortMode = 'ASC',
+  startRow,
+}: BuildQueryParams) => {
+  if (mode === QueryMode.PAGE) {
+    const start = (page - 1) * page_size;
+    const end = start + page_size - 1;
+    return {
+      end: Number(end),
+      start: Number(start),
+      query: JSON.parse(query),
+      sortBy: sortBy.toString(),
+      sortMode,
+    };
+  }
+  return {
+    end: Number(endRow),
+    start: Number(startRow),
+    query: JSON.parse(query),
+    sortBy: sortBy.toString(),
+    sortMode,
+  };
+};
+
 export const buildQuery = (req: Request, defaultSortColumn: string) => {
   const mode = get(req.query, 'mode', QueryMode.PAGE).toString().toUpperCase();
   const { sortBy = defaultSortColumn, sortMode = 'ASC' } = req.query;

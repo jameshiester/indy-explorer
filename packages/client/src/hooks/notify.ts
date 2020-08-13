@@ -25,7 +25,6 @@ export const useNodeStatus = () => {
       nodesCache.current = nodes.reduce((acc, node) => {
         return { ...acc, [node.name]: { active: node.active } };
       }, {} as any);
-      console.log(nodesCache.current);
     }
   }, [nodes]);
 };

@@ -1,21 +1,17 @@
 import path from 'path';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { createConnection } from 'typeorm';
 import http from 'http';
 import socket from 'socket.io';
-import { get } from 'lodash';
 import Transaction from './entity/transaction';
 import Pointer from './entity/pointer';
 import { Anchor } from './anchor';
 import 'reflect-metadata';
-import { queryTransactions } from './repository/transaction';
-import { getLedgerTypeByName, buildQuery } from './util';
-import { queryNodes } from './repository/node';
 import IndyNode from './entity/node';
 import NodeStatus from './entity/nodestatus';
 import NodesStatusSummary from './entity/nodeSummary';
-import { getNodesStatus, getNodeStatuses } from './repository/nodestatus';
-import { getNodesStatusSummaries } from './repository/nodeSummary';
+import { RegisterRoutes } from './routes';
+import swaggerUi from 'swagger-ui-express';
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -42,106 +38,16 @@ createConnection({
 }).then(async (connection) => {
   const anchor = new Anchor(io);
 
-  app.get('/api/ledger/:ledger_type', async (req, res, next) => {
-    if (anchor.ready()) {
-      try {
-        const ledgerType = get(
-          req.params,
-          'ledger_type',
-          'DOMAIN'
-        ).toUpperCase();
-        const { start, end, query, sortBy, sortMode } = buildQuery(
-          req,
-          'sequence'
-        );
-        const data = await queryTransactions(
-          getLedgerTypeByName(ledgerType),
-          start,
-          end,
-          query,
-          sortBy.toString(),
-          sortMode === 'ASC' || sortMode === 'DESC' ? sortMode : undefined
-        );
-        res.json(data);
-      } catch (e) {
-        console.log(e);
-        next(e);
-      }
-    } else {
-      next('Trust Anchor Not Ready');
-    }
-  });
+  RegisterRoutes(app);
 
-  app.get('/api/nodes', async (req, res, next) => {
-    if (anchor.ready()) {
-      try {
-        const { start, end, query, sortBy, sortMode } = buildQuery(req, 'name');
-        const data = await queryNodes(
-          start,
-          end,
-          query,
-          sortBy,
-          sortMode === 'ASC' || sortMode === 'DESC' ? sortMode : 'ASC'
-        );
-        res.json(data);
-      } catch (e) {
-        console.log(e);
-        next(e);
-      }
-    } else {
-      next('Trust Anchor Not Ready');
+  app.use(
+    '/api/docs',
+    swaggerUi.serve,
+    async (_req: Request, res: Response) => {
+      return res.send(swaggerUi.generateHTML(await import('./swagger.json')));
     }
-  });
-
-  app.get('/api/nodes/history', async (req, res, next) => {
-    if (anchor.ready()) {
-      try {
-        const { since = 0 } = req.query;
-        const data = await getNodesStatus(Number(since));
-        res.json(data);
-      } catch (e) {
-        console.log(e);
-        next(e);
-      }
-    } else {
-      next('Trust Anchor Not Ready');
-    }
-  });
-
-  app.get('/api/nodes/history/summary', async (req, res, next) => {
-    if (anchor.ready()) {
-      try {
-        const { since = 0 } = req.query;
-        const data = await getNodesStatusSummaries(Number(since));
-        res.json(data);
-      } catch (e) {
-        console.log(e);
-        next(e);
-      }
-    } else {
-      next('Trust Anchor Not Ready');
-    }
-  });
-
-  app.get('/api/nodes/:node/history', async (req, res, next) => {
-    if (anchor.ready()) {
-      try {
-        const { since = 0 } = req.query;
-        const { node } = req.params;
-        const data = await getNodeStatuses(Number(since), node);
-        res.json(data);
-      } catch (e) {
-        console.log(e);
-        next(e);
-      }
-    } else {
-      next('Trust Anchor Not Ready');
-    }
-  });
-
-  // add middlewares
+  );
   app.use(express.static(path.join(__dirname, '..', '..', 'client/build')));
-
   app.get('/*', (_, res) => {
     res.sendFile(path.join(__dirname, '..', '..', 'client/build/index.html'));
   });

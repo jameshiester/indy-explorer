@@ -174,9 +174,9 @@ export interface IndyValidatorData {
     Total_nodes_count: number;
     f_value: number;
     Quorums: string;
-    Reachable_nodes: Array<[string, number | undefined | null]>;
-    Unreachable_nodes: Array<[string, number | undefined | null]>;
-    Blacklisted_nodes: Array<[string, number | undefined | null]>;
+    Reachable_nodes: Array<any>;
+    Unreachable_nodes: Array<any>;
+    Blacklisted_nodes: Array<any>;
     Reachable_nodes_count: number;
     Unreachable_nodes_count: number;
     Suspicious_nodes: string;

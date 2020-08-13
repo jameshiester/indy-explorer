@@ -51,7 +51,7 @@ export const useVisualizer = (ledger: string = 'domain') => {
   const queryFn = async (...args: any[]) => {
     try {
       const response = await axios.get<{ data: Array<ITransaction> }>(
-        `/api/ledger/${ledger}?page_size=100`
+        `/api/transactions/${ledger}?page_size=100`
       );
       return response.data.data;
     } catch (e) {

@@ -1,0 +1,1507 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"IndyValidatorData": {
+				"properties": {
+					"undefined": {
+						"type": "string"
+					},
+					"timestamp": {
+						"type": "number",
+						"format": "double"
+					},
+					"Hardware": {
+						"properties": {
+							"HDD_used_by_node": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"HDD_used_by_node"
+						],
+						"type": "object"
+					},
+					"Pool_info": {
+						"properties": {
+							"Suspicious_nodes": {
+								"type": "string"
+							},
+							"Unreachable_nodes_count": {
+								"type": "number",
+								"format": "double"
+							},
+							"Reachable_nodes_count": {
+								"type": "number",
+								"format": "double"
+							},
+							"Blacklisted_nodes": {
+								"items": {},
+								"type": "array"
+							},
+							"Unreachable_nodes": {
+								"items": {},
+								"type": "array"
+							},
+							"Reachable_nodes": {
+								"items": {},
+								"type": "array"
+							},
+							"Quorums": {
+								"type": "string"
+							},
+							"f_value": {
+								"type": "number",
+								"format": "double"
+							},
+							"Total_nodes_count": {
+								"type": "number",
+								"format": "double"
+							},
+							"Read_only": {
+								"type": "boolean"
+							}
+						},
+						"required": [
+							"Suspicious_nodes",
+							"Unreachable_nodes_count",
+							"Reachable_nodes_count",
+							"Blacklisted_nodes",
+							"Unreachable_nodes",
+							"Reachable_nodes",
+							"Quorums",
+							"f_value",
+							"Total_nodes_count",
+							"Read_only"
+						],
+						"type": "object"
+					},
+					"Protocol": {},
+					"Node_info": {
+						"properties": {
+							"Replicas_status": {},
+							"Count_of_replicas": {
+								"type": "number",
+								"format": "double"
+							},
+							"Requests_timeouts": {
+								"properties": {
+									"Ordering_phase_req_timeouts": {
+										"type": "number",
+										"format": "double"
+									},
+									"Propagates_phase_req_timeouts": {
+										"type": "number",
+										"format": "double"
+									}
+								},
+								"required": [
+									"Ordering_phase_req_timeouts",
+									"Propagates_phase_req_timeouts"
+								],
+								"type": "object"
+							},
+							"Freshness_status": {
+								"properties": {
+									"0": {
+										"properties": {
+											"Has_write_consensus": {
+												"type": "boolean"
+											},
+											"Last_updated_time": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"Has_write_consensus",
+											"Last_updated_time"
+										],
+										"type": "object"
+									},
+									"1": {
+										"properties": {
+											"Has_write_consensus": {
+												"type": "boolean"
+											},
+											"Last_updated_time": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"Has_write_consensus",
+											"Last_updated_time"
+										],
+										"type": "object"
+									},
+									"2": {
+										"properties": {
+											"Has_write_consensus": {
+												"type": "boolean"
+											},
+											"Last_updated_time": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"Has_write_consensus",
+											"Last_updated_time"
+										],
+										"type": "object"
+									}
+								},
+								"required": [
+									"2",
+									"1",
+									"0"
+								],
+								"type": "object"
+							},
+							"Catchup_status": {
+								"properties": {
+									"Number_txns_in_catchup": {
+										"properties": {
+											"0": {
+												"type": "number",
+												"format": "double"
+											},
+											"1": {
+												"type": "number",
+												"format": "double"
+											},
+											"2": {
+												"type": "number",
+												"format": "double"
+											},
+											"3": {
+												"type": "number",
+												"format": "double"
+											}
+										},
+										"required": [
+											"3",
+											"2",
+											"1",
+											"0"
+										],
+										"type": "object"
+									},
+									"Waiting_consistency_proof_msgs": {
+										"properties": {
+											"0": {},
+											"1": {},
+											"2": {},
+											"3": {}
+										},
+										"type": "object"
+									},
+									"Received_LedgerStatus": {},
+									"Ledger_statuses": {
+										"properties": {
+											"0": {
+												"type": "string"
+											},
+											"1": {
+												"type": "string"
+											},
+											"2": {
+												"type": "string"
+											},
+											"3": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"3",
+											"2",
+											"1",
+											"0"
+										],
+										"type": "object"
+									}
+								},
+								"required": [
+									"Number_txns_in_catchup",
+									"Waiting_consistency_proof_msgs",
+									"Received_LedgerStatus",
+									"Ledger_statuses"
+								],
+								"type": "object"
+							},
+							"View_change_status": {
+								"properties": {
+									"VCDone_queue": {},
+									"IC_queue": {},
+									"Last_complete_view_no": {
+										"type": "number",
+										"format": "double"
+									},
+									"Last_view_change_started_at": {
+										"type": "string"
+									},
+									"VC_in_progress": {
+										"type": "boolean"
+									},
+									"View_No": {
+										"type": "number",
+										"format": "double"
+									}
+								},
+								"required": [
+									"VCDone_queue",
+									"IC_queue",
+									"Last_complete_view_no",
+									"Last_view_change_started_at",
+									"VC_in_progress",
+									"View_No"
+								],
+								"type": "object"
+							},
+							"Uncommitted_state_root_hashes": {},
+							"Uncommitted_ledger_txns": {},
+							"Uncommitted_ledger_root_hashes": {},
+							"Committed_state_root_hashes": {},
+							"Committed_ledger_root_hashes": {},
+							"Metrics": {
+								"properties": {
+									"uptime": {
+										"type": "number",
+										"format": "double"
+									},
+									"throughput": {},
+									"undefined": {},
+									"Omega": {
+										"type": "string"
+									},
+									"Lambda": {
+										"type": "string"
+									},
+									"Delata": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"uptime",
+									"throughput",
+									null,
+									null,
+									null,
+									null,
+									null,
+									null,
+									null,
+									null,
+									null,
+									null,
+									null,
+									"Omega",
+									"Lambda",
+									"Delata"
+								],
+								"type": "object"
+							},
+							"BLS_key": {
+								"type": "string"
+							},
+							"verkey": {
+								"type": "string"
+							},
+							"did": {
+								"type": "string"
+							},
+							"Node_protocol": {
+								"type": "string"
+							},
+							"Client_protocol": {
+								"type": "string"
+							},
+							"Node_ip": {
+								"type": "string"
+							},
+							"Node_port": {
+								"type": "number",
+								"format": "double"
+							},
+							"Client_ip": {
+								"type": "string"
+							},
+							"Client_port": {
+								"type": "number",
+								"format": "double"
+							},
+							"Mode": {
+								"type": "string"
+							},
+							"Name": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"Replicas_status",
+							"Count_of_replicas",
+							"Requests_timeouts",
+							"Freshness_status",
+							"Catchup_status",
+							"View_change_status",
+							"Uncommitted_state_root_hashes",
+							"Uncommitted_ledger_txns",
+							"Uncommitted_ledger_root_hashes",
+							"Committed_state_root_hashes",
+							"Committed_ledger_root_hashes",
+							"Metrics",
+							"BLS_key",
+							"verkey",
+							"did",
+							"Node_protocol",
+							"Client_protocol",
+							"Node_ip",
+							"Node_port",
+							"Client_ip",
+							"Client_port",
+							"Mode",
+							"Name"
+						],
+						"type": "object"
+					},
+					"Software": {
+						"properties": {
+							"sovrin": {},
+							"indy-node": {
+								"type": "string"
+							},
+							"Indy_packages": {
+								"items": {
+									"type": "string"
+								},
+								"type": "array"
+							},
+							"Installed_packages": {
+								"items": {
+									"type": "string"
+								},
+								"type": "array"
+							},
+							"OS_version": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"sovrin",
+							"indy-node",
+							"Indy_packages",
+							"Installed_packages",
+							"OS_version"
+						],
+						"type": "object"
+					},
+					"Update_time": {
+						"type": "string"
+					},
+					"Memory_profiler": {
+						"items": {},
+						"type": "array"
+					},
+					"Extractions": {
+						"properties": {
+							"stops_stat": {},
+							"upgrade_log": {
+								"type": "string"
+							},
+							"node-control status": {
+								"items": {
+									"type": "string"
+								},
+								"type": "array"
+							},
+							"indy-node_status": {
+								"items": {
+									"type": "string"
+								},
+								"type": "array"
+							},
+							"journalctl_exceptions": {
+								"items": {
+									"type": "string"
+								},
+								"type": "array"
+							}
+						},
+						"required": [
+							"stops_stat",
+							"upgrade_log",
+							"node-control status",
+							"indy-node_status",
+							"journalctl_exceptions"
+						],
+						"type": "object"
+					}
+				},
+				"required": [
+					null,
+					"timestamp",
+					"Hardware",
+					"Pool_info",
+					"Protocol",
+					"Node_info",
+					"Software",
+					"Update_time",
+					"Memory_profiler",
+					"Extractions"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"INode": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"active": {
+						"type": "boolean"
+					},
+					"value": {
+						"$ref": "#/components/schemas/IndyValidatorData"
+					},
+					"indy_version": {
+						"type": "string"
+					},
+					"did": {
+						"type": "string"
+					},
+					"verkey": {
+						"type": "string"
+					},
+					"uptime_seconds": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"name",
+					"active"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"GetNodesResponse": {
+				"properties": {
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/INode"
+						},
+						"type": "array"
+					},
+					"totalRecords": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"data",
+					"totalRecords"
+				],
+				"type": "object"
+			},
+			"QueryMode": {
+				"enum": [
+					"PAGE",
+					"INFINITE"
+				],
+				"type": "string"
+			},
+			"NodeStatus": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"timestamp": {
+						"type": "number",
+						"format": "double"
+					},
+					"indy_version": {
+						"type": "string"
+					},
+					"read_throughput": {
+						"type": "number",
+						"format": "double"
+					},
+					"write_throughput": {
+						"type": "number",
+						"format": "double"
+					},
+					"active": {
+						"type": "boolean"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"NodesStatusSummary": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"timestamp": {
+						"type": "number",
+						"format": "double"
+					},
+					"read_throughput": {
+						"type": "number",
+						"format": "double"
+					},
+					"write_throughput": {
+						"type": "number",
+						"format": "double"
+					},
+					"active": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TransactionType": {
+				"enum": [
+					"0",
+					"1",
+					"100",
+					"101",
+					"102",
+					"103",
+					"104",
+					"105",
+					"107",
+					"108",
+					"109",
+					"110",
+					"111",
+					"112",
+					"113",
+					"114",
+					"118",
+					"120"
+				],
+				"type": "string"
+			},
+			"IndyRoleType": {
+				"enum": [
+					"0",
+					"2",
+					"100",
+					"101"
+				],
+				"type": "string"
+			},
+			"TransactionType.NYM": {
+				"enum": [
+					"1"
+				],
+				"type": "string"
+			},
+			"NymTransaction": {
+				"properties": {
+					"data": {
+						"properties": {
+							"verkey": {
+								"type": "string"
+							},
+							"role": {
+								"$ref": "#/components/schemas/IndyRoleType"
+							},
+							"dest": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"verkey",
+							"role",
+							"dest"
+						],
+						"type": "object"
+					},
+					"type": {
+						"$ref": "#/components/schemas/TransactionType.NYM"
+					},
+					"metadata": {
+						"properties": {
+							"from": {
+								"type": "string"
+							}
+						},
+						"type": "object"
+					}
+				},
+				"required": [
+					"data",
+					"type",
+					"metadata"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TransactionType.SCHEMA": {
+				"enum": [
+					"101"
+				],
+				"type": "string"
+			},
+			"SchemaTransaction": {
+				"properties": {
+					"data": {
+						"properties": {
+							"data": {
+								"properties": {
+									"version": {
+										"type": "string"
+									},
+									"name": {
+										"type": "string"
+									},
+									"attr_names": {
+										"items": {
+											"type": "string"
+										},
+										"type": "array"
+									}
+								},
+								"required": [
+									"version",
+									"name",
+									"attr_names"
+								],
+								"type": "object"
+							}
+						},
+						"required": [
+							"data"
+						],
+						"type": "object"
+					},
+					"type": {
+						"$ref": "#/components/schemas/TransactionType.SCHEMA"
+					},
+					"metadata": {}
+				},
+				"required": [
+					"data",
+					"type",
+					"metadata"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TransactionType.ATTRIB": {
+				"enum": [
+					"100"
+				],
+				"type": "string"
+			},
+			"AttributeTransaction": {
+				"properties": {
+					"data": {
+						"properties": {
+							"raw": {
+								"type": "string"
+							},
+							"dest": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"raw",
+							"dest"
+						],
+						"type": "object"
+					},
+					"type": {
+						"$ref": "#/components/schemas/TransactionType.ATTRIB"
+					},
+					"metadata": {
+						"properties": {
+							"from": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"from"
+						],
+						"type": "object"
+					}
+				},
+				"required": [
+					"data",
+					"type",
+					"metadata"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TransactionType.CRED_DEF": {
+				"enum": [
+					"102"
+				],
+				"type": "string"
+			},
+			"CredentialDefinitionTransaction": {
+				"properties": {
+					"data": {
+						"properties": {
+							"data": {
+								"properties": {
+									"tag": {
+										"type": "string"
+									},
+									"signature_type": {
+										"type": "string"
+									},
+									"ref": {
+										"type": "number",
+										"format": "double"
+									}
+								},
+								"required": [
+									"tag",
+									"signature_type",
+									"ref"
+								],
+								"type": "object"
+							}
+						},
+						"required": [
+							"data"
+						],
+						"type": "object"
+					},
+					"type": {
+						"$ref": "#/components/schemas/TransactionType.CRED_DEF"
+					},
+					"metadata": {
+						"properties": {
+							"from": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"from"
+						],
+						"type": "object"
+					}
+				},
+				"required": [
+					"data",
+					"type",
+					"metadata"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TransactionType.NODE": {
+				"enum": [
+					"0"
+				],
+				"type": "string"
+			},
+			"NodeTransaction": {
+				"properties": {
+					"data": {
+						"properties": {
+							"dest": {
+								"type": "string"
+							},
+							"data": {
+								"properties": {
+									"services": {
+										"items": {
+											"type": "string"
+										},
+										"type": "array"
+									},
+									"node_port": {
+										"type": "number",
+										"format": "double"
+									},
+									"node_ip": {
+										"type": "string"
+									},
+									"client_port": {
+										"type": "number",
+										"format": "double"
+									},
+									"client_ip": {
+										"type": "string"
+									},
+									"blskey": {
+										"type": "string"
+									},
+									"blskey_pop": {
+										"type": "string"
+									},
+									"alias": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"services",
+									"node_port",
+									"node_ip",
+									"client_port",
+									"client_ip",
+									"blskey",
+									"blskey_pop",
+									"alias"
+								],
+								"type": "object"
+							}
+						},
+						"required": [
+							"dest",
+							"data"
+						],
+						"type": "object"
+					},
+					"type": {
+						"$ref": "#/components/schemas/TransactionType.NODE"
+					},
+					"metadata": {
+						"properties": {
+							"from": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"from"
+						],
+						"type": "object"
+					}
+				},
+				"required": [
+					"data",
+					"type",
+					"metadata"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IndyTransaction": {
+				"properties": {
+					"auditPath": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"ledgerSize": {
+						"type": "number",
+						"format": "double"
+					},
+					"reqSignature": {
+						"properties": {
+							"values": {
+								"items": {
+									"properties": {
+										"value": {
+											"type": "string"
+										},
+										"from": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"value",
+										"from"
+									],
+									"type": "object"
+								},
+								"type": "array"
+							},
+							"type": {
+								"type": "string",
+								"enum": [
+									"ED25519"
+								],
+								"nullable": false
+							}
+						},
+						"required": [
+							"values",
+							"type"
+						],
+						"type": "object"
+					},
+					"rootHash": {
+						"type": "string"
+					},
+					"txn": {
+						"anyOf": [
+							{
+								"$ref": "#/components/schemas/NymTransaction"
+							},
+							{
+								"$ref": "#/components/schemas/SchemaTransaction"
+							},
+							{
+								"$ref": "#/components/schemas/AttributeTransaction"
+							},
+							{
+								"$ref": "#/components/schemas/CredentialDefinitionTransaction"
+							},
+							{
+								"$ref": "#/components/schemas/NodeTransaction"
+							}
+						]
+					},
+					"txnMetadata": {
+						"properties": {
+							"txnTime": {
+								"type": "number",
+								"format": "double"
+							},
+							"txnId": {
+								"type": "string"
+							},
+							"seqNo": {
+								"type": "number",
+								"format": "double"
+							}
+						},
+						"required": [
+							"seqNo"
+						],
+						"type": "object"
+					},
+					"ver": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"auditPath",
+					"ledgerSize",
+					"rootHash",
+					"txn",
+					"txnMetadata",
+					"ver"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ITransaction": {
+				"properties": {
+					"added": {
+						"type": "number",
+						"format": "double"
+					},
+					"sequence": {
+						"type": "number",
+						"format": "double"
+					},
+					"ledger": {
+						"type": "number",
+						"format": "double"
+					},
+					"transactionType": {
+						"$ref": "#/components/schemas/TransactionType"
+					},
+					"role": {
+						"$ref": "#/components/schemas/IndyRoleType"
+					},
+					"transactionId": {
+						"type": "string"
+					},
+					"value": {
+						"$ref": "#/components/schemas/IndyTransaction"
+					},
+					"source": {
+						"type": "string"
+					},
+					"destination": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"sequence",
+					"ledger"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"GetTransactionsResponse": {
+				"properties": {
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/ITransaction"
+						},
+						"type": "array"
+					},
+					"totalRecords": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"data",
+					"totalRecords"
+				],
+				"type": "object"
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "Network Explorer",
+		"version": "1.0.0",
+		"description": "api for indy network explorer",
+		"contact": {
+			"name": "James Hiester"
+		}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/nodes": {
+			"get": {
+				"operationId": "GetNodes",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/GetNodesResponse"
+										},
+										{}
+									]
+								}
+							}
+						}
+					},
+					"502": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"reason": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"reason"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Nodes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "startRow",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endRow",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "query",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sortBy",
+						"required": false,
+						"schema": {
+							"default": "name",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sortMode",
+						"required": false,
+						"schema": {
+							"default": "ASC"
+						}
+					},
+					{
+						"in": "query",
+						"name": "mode",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/QueryMode"
+						}
+					}
+				]
+			}
+		},
+		"/nodes/history": {
+			"get": {
+				"operationId": "GetHistory",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"items": {
+												"$ref": "#/components/schemas/NodeStatus"
+											},
+											"type": "array"
+										},
+										{}
+									]
+								}
+							}
+						}
+					},
+					"502": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"reason": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"reason"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Nodes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "since",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/nodes/{node}/history": {
+			"get": {
+				"operationId": "GetHistoryByNode",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"items": {
+												"$ref": "#/components/schemas/NodeStatus"
+											},
+											"type": "array"
+										},
+										{}
+									]
+								}
+							}
+						}
+					},
+					"502": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"reason": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"reason"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Nodes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "node",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "since",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/nodes/history/summary": {
+			"get": {
+				"operationId": "GetHistorySummary",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"items": {
+												"$ref": "#/components/schemas/NodesStatusSummary"
+											},
+											"type": "array"
+										},
+										{}
+									]
+								}
+							}
+						}
+					},
+					"502": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"reason": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"reason"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Nodes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "since",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/transactions/{ledgerType}": {
+			"get": {
+				"operationId": "GetTransactions",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/GetTransactionsResponse"
+										},
+										{}
+									]
+								}
+							}
+						}
+					},
+					"502": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"reason": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"reason"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Transactions"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "ledgerType",
+						"required": true,
+						"schema": {}
+					},
+					{
+						"in": "query",
+						"name": "startRow",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endRow",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "query",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sortBy",
+						"required": false,
+						"schema": {
+							"default": "name",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page_size",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sortMode",
+						"required": false,
+						"schema": {
+							"default": "ASC"
+						}
+					},
+					{
+						"in": "query",
+						"name": "mode",
+						"required": false,
+						"schema": {
+							"$ref": "#/components/schemas/QueryMode"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	],
+	"tags": [
+		{
+			"name": "Transactions",
+			"description": "Explore ledger records",
+			"externalDocs": {
+				"description": "Find out more about transactions",
+				"url": "https://hyperledger-indy.readthedocs.io/projects/node/en/latest/transactions.html"
+			}
+		},
+		{
+			"name": "Nodes",
+			"description": "Explore node status and history"
+		}
+	]
+}

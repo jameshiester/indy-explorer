@@ -1,0 +1,30 @@
+{
+  "entryFile": "src/index.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": [
+    "src/controllers/**/*"
+  ],
+  "spec": {
+    "tags": [
+      {
+        "name": "Transactions",
+        "description": "Explore ledger records",
+        "externalDocs": {
+          "description": "Find out more about transactions",
+          "url": "https://hyperledger-indy.readthedocs.io/projects/node/en/latest/transactions.html"
+        }
+      },
+      {
+        "name": "Nodes",
+        "description": "Explore node status and history"
+      }
+    ],
+    "outputDirectory": "src",
+    "specVersion": 3,
+    "name": "Network Explorer"
+  },
+  "routes": {
+    "basePath": "/api",
+    "routesDir": "src"
+  }
+}

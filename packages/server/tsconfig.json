@@ -10,7 +10,8 @@
     "module": "esnext",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "inlineSourceMap": true
+    "inlineSourceMap": true,
+    "resolveJsonModule": true
   },
   "include": ["src/**/*"],
   "exclude": ["build"]
