@@ -8,8 +8,7 @@ import {
   Tags,
   TsoaResponse,
 } from 'tsoa';
-import { QueryMode } from '../util/types';
-import { buildQuery2 } from '../util';
+import { buildQuery } from '../util';
 import { queryNodes } from '../repository/node';
 import { provideSingleton } from '../ioc/util';
 import { INode } from 'model';
@@ -31,10 +30,7 @@ export class NodesController extends Controller {
     @Query() endRow?: number,
     @Query() query?: any,
     @Query() sortBy: string = 'name',
-    @Query() page?: number,
-    @Query() page_size?: number,
-    @Query() sortMode: 'ASC' | 'DESC' = 'ASC',
-    @Query() mode: QueryMode = QueryMode.INFINITE
+    @Query() sortMode: 'ASC' | 'DESC' = 'ASC'
   ): Promise<GetNodesResponse | void> {
     try {
       const {
@@ -43,16 +39,13 @@ export class NodesController extends Controller {
         query: predicate,
         sortBy: sortByColumn,
         sortMode: sortDirection,
-      } = buildQuery2({
+      } = buildQuery({
         endRow,
-        mode,
         startRow,
         query,
-        page,
-        page_size,
         sortBy,
         sortMode,
-        defaultSortColumn: 'sequence',
+        defaultSortColumn: 'name',
       });
       return await queryNodes(
         start,

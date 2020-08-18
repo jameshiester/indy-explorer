@@ -1,7 +1,4 @@
 import { LedgerType, TransactionType, IndyRoleType } from 'model';
-import { Request } from 'express';
-import { QueryMode } from './types';
-import { get } from 'lodash';
 export const asyncForEach = async <T>(
   array: T[],
   callback: (item: T, index: number, values: T[]) => Promise<void>
@@ -48,9 +45,6 @@ export const mapRoleTypeToName = (type?: string): string | undefined => {
 
 export interface BuildQueryParams {
   endRow?: number;
-  mode: QueryMode;
-  page_size?: number;
-  page?: number;
   query?: any;
   sortBy: string;
   sortMode: string;
@@ -58,59 +52,18 @@ export interface BuildQueryParams {
   defaultSortColumn: string;
 }
 
-export const buildQuery2 = ({
-  endRow,
-  mode,
-  page_size = 10000,
-  page = 1,
+export const buildQuery = ({
+  endRow = 1000,
   query = '{}',
   defaultSortColumn,
   sortBy = defaultSortColumn,
   sortMode = 'ASC',
-  startRow,
+  startRow = 0,
 }: BuildQueryParams) => {
-  if (mode === QueryMode.PAGE) {
-    const start = (page - 1) * page_size;
-    const end = start + page_size - 1;
-    return {
-      end: Number(end),
-      start: Number(start),
-      query: JSON.parse(query),
-      sortBy: sortBy.toString(),
-      sortMode,
-    };
-  }
   return {
     end: Number(endRow),
     start: Number(startRow),
     query: JSON.parse(query),
-    sortBy: sortBy.toString(),
-    sortMode,
-  };
-};
-
-export const buildQuery = (req: Request, defaultSortColumn: string) => {
-  const mode = get(req.query, 'mode', QueryMode.PAGE).toString().toUpperCase();
-  const { sortBy = defaultSortColumn, sortMode = 'ASC' } = req.query;
-  const query = JSON.parse(get(req.query, 'query', '{}').toString());
-  if (mode === QueryMode.PAGE) {
-    const page = Math.floor(Number(get(req.query, 'page', 1)));
-    const page_size = Math.floor(Number(get(req.query, 'page_size', 10000)));
-    const start = (page - 1) * page_size;
-    const end = start + page_size - 1;
-    return {
-      end: Number(end),
-      start: Number(start),
-      query,
-      sortBy: sortBy.toString(),
-      sortMode,
-    };
-  }
-  const { startRow = 0, endRow = 1000 } = req.query;
-  return {
-    end: Number(endRow),
-    start: Number(startRow),
-    query,
     sortBy: sortBy.toString(),
     sortMode,
   };

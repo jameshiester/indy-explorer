@@ -505,13 +505,6 @@
 				],
 				"type": "object"
 			},
-			"QueryMode": {
-				"enum": [
-					"PAGE",
-					"INFINITE"
-				],
-				"type": "string"
-			},
 			"NodeStatus": {
 				"properties": {
 					"id": {
@@ -1146,36 +1139,10 @@
 					},
 					{
 						"in": "query",
-						"name": "page",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "query",
-						"name": "page_size",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "query",
 						"name": "sortMode",
 						"required": false,
 						"schema": {
 							"default": "ASC"
-						}
-					},
-					{
-						"in": "query",
-						"name": "mode",
-						"required": false,
-						"schema": {
-							"$ref": "#/components/schemas/QueryMode"
 						}
 					}
 				]
@@ -1443,26 +1410,8 @@
 						"name": "sortBy",
 						"required": false,
 						"schema": {
-							"default": "name",
+							"default": "sequence",
 							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "page",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "query",
-						"name": "page_size",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
 						}
 					},
 					{
@@ -1471,14 +1420,6 @@
 						"required": false,
 						"schema": {
 							"default": "ASC"
-						}
-					},
-					{
-						"in": "query",
-						"name": "mode",
-						"required": false,
-						"schema": {
-							"$ref": "#/components/schemas/QueryMode"
 						}
 					}
 				]

@@ -8,8 +8,7 @@ import {
   Tags,
   TsoaResponse,
 } from 'tsoa';
-import { QueryMode } from '../util/types';
-import { buildQuery2, getLedgerTypeByName } from '../util';
+import { buildQuery, getLedgerTypeByName } from '../util';
 import { provideSingleton } from '../ioc/util';
 import { ITransaction } from 'model';
 import { queryTransactions } from '../repository/transaction';
@@ -30,11 +29,8 @@ export class TransactionsController extends Controller {
     @Query() startRow?: number,
     @Query() endRow?: number,
     @Query() query?: any,
-    @Query() sortBy: string = 'name',
-    @Query() page?: number,
-    @Query() page_size?: number,
-    @Query() sortMode: 'ASC' | 'DESC' = 'ASC',
-    @Query() mode: QueryMode = QueryMode.INFINITE
+    @Query() sortBy: string = 'sequence',
+    @Query() sortMode: 'ASC' | 'DESC' = 'ASC'
   ): Promise<GetTransactionsResponse | void> {
     try {
       const {
@@ -43,16 +39,13 @@ export class TransactionsController extends Controller {
         query: predicate,
         sortBy: sortByColumn,
         sortMode: sortDirection,
-      } = buildQuery2({
+      } = buildQuery({
         endRow,
-        mode,
         startRow,
         query,
-        page,
-        page_size,
         sortBy,
         sortMode,
-        defaultSortColumn: 'name',
+        defaultSortColumn: 'sequence',
       });
       return await queryTransactions(
         getLedgerTypeByName(ledgerType),

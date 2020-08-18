@@ -3,6 +3,7 @@ import { useQuery } from 'react-query';
 import { get } from 'lodash';
 import axios from 'axios';
 import { ITransaction } from 'model';
+import { useState } from 'react';
 
 const getSource = (txn: any) => {
   return get(txn, 'source');
@@ -40,26 +41,39 @@ const mapTxn = (txn: any, data: any[]): any => {
 };
 
 const mapData = (data: any[]) => {
-  const root = data.find((txn) => !get(txn, 'source'));
-  if (root) {
-    return mapTxn(root, data);
+  if (data.length) {
+    const root = data.find((txn) => !get(txn, 'source'));
+    if (root) {
+      return [mapTxn(root, data)];
+    }
+    return data
+      .filter(
+        (txn) => !data.find((otherTxn) => otherTxn.destination === txn.source)
+      )
+      .map((txn: any) => mapTxn(txn, data));
   }
 };
 
-export const useVisualizer = (ledger: string = 'domain') => {
+export const useVisualizer = (min: number = 0, max: number = 250) => {
   const { enqueueSnackbar } = useSnackbar();
-  const queryFn = async (...args: any[]) => {
+  const queryFn = async (_: string, min: number, max: number) => {
     try {
-      const response = await axios.get<{ data: Array<ITransaction> }>(
-        `/api/transactions/${ledger}?page_size=100`
-      );
-      return response.data.data;
+      const response = await axios.get<{
+        data: Array<ITransaction>;
+        totalRecords: number;
+      }>(`/api/transactions/DOMAIN`, {
+        params: { startRow: min, endRow: max },
+      });
+      if (response.data.data) {
+        return { ...response.data, data: mapData(response.data.data) };
+      }
+      return response.data;
     } catch (e) {
       throw new Error(`Failed to reach Transaction service`);
     }
   };
-  const { data } = useQuery({
-    queryKey: [TRANSACTIONS_KEY, ledger],
+  const { data, isLoading } = useQuery({
+    queryKey: [TRANSACTIONS_KEY, min, max],
     queryFn,
     config: {
       refetchOnWindowFocus: false,
@@ -69,5 +83,10 @@ export const useVisualizer = (ledger: string = 'domain') => {
         }),
     },
   });
-  return data ? [mapData(data)] : undefined;
+
+  return {
+    data: data ? data.data : undefined,
+    totalRecords: data ? data.totalRecords : 0,
+    isLoading,
+  };
 };

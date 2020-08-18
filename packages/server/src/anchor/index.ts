@@ -1,11 +1,4 @@
-import {
-  WalletConfig,
-  WalletCredentials,
-  LedgerType,
-  IndyValidatorStatus,
-  NODE_UPDATE,
-  INode,
-} from 'model';
+import { WalletConfig, WalletCredentials, LedgerType, INode } from 'model';
 import { get } from 'lodash';
 import {
   buildGetNymRequest,
@@ -16,16 +9,13 @@ import {
 import { createAnchorWallet } from '../indy/wallet';
 import { asyncForEach } from '../util';
 import { untilActive } from '../vdr';
-import { createOrUpdateNodes } from '../repository/node';
 import { syncLedgerCache } from '../sync/transaction';
-import { createOrUpdateNodeStatuses } from '../repository/nodestatus';
 import { Server } from 'socket.io';
 import saveNodes from '../sync/node';
 
 const DEFAULT_SEED = '000000000000000000000000Trustee1';
-const DEFAULT_MAX_FETCH = 50000;
 
-const { ANONYMOUS, LEDGER_SEED, RESYNC_TIME = 120000, MAX_FETCH } = process.env;
+const { ANONYMOUS, LEDGER_SEED, RESYNC_TIME = 120000 } = process.env;
 
 export interface GetTransactionParams {
   cache: boolean;

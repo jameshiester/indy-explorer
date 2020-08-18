@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import Card from '@material-ui/core/Card';
+import Card from '@shared/card';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@shared/table';
 import { durationInWords } from '@util/helper';
@@ -12,25 +12,13 @@ import StatusRenderer from './StatusRenderer';
 import Dialog from './Dialog';
 import ActiveChart from './chart/Active';
 import MuiGrid from '@material-ui/core/Grid';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import Throughput from './chart/Throughput';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     wrapper: {
       marginTop: theme.spacing(3),
-    },
-    root: {
-      boxShadow:
-        '0 1px 15px rgba(0, 0, 0, 0.04), 0 1px 6px rgba(0, 0, 0, 0.04)',
-    },
-    title: {
-      fontWeight: 300,
-      paddingLeft: theme.spacing(2),
-      paddingTop: theme.spacing(1),
-      fontSize: '1.25rem',
     },
   })
 );
@@ -86,38 +74,27 @@ const List = () => {
   const handleGridReady = useCallback((event: GridReadyEvent) => {
     setGridApi(event.api);
   }, []);
+
   const data: Array<INode> | undefined = useSelector(nodesSelector);
   return (
     <>
       <MuiGrid container spacing={3} className={classes.wrapper}>
         <MuiGrid item sm={12} md={6}>
-          <Card className={classes.root}>
-            <CardHeader
-              title={'Nodes Online'}
-              titleTypographyProps={{ className: classes.title }}
-            ></CardHeader>
+          <Card title={'Nodes Online'}>
             <CardContent>
               <ActiveChart />
             </CardContent>
           </Card>
         </MuiGrid>
         <MuiGrid item sm={12} md={6}>
-          <Card className={classes.root}>
-            <CardHeader
-              title={'Average Throughput'}
-              titleTypographyProps={{ className: classes.title }}
-            ></CardHeader>
+          <Card title={'Average Throughput'}>
             <CardContent>
               <Throughput />
             </CardContent>
           </Card>
         </MuiGrid>
         <MuiGrid item sm={12}>
-          <Card className={classes.root}>
-            {/* <CardHeader
-          title={'Nodes'}
-          titleTypographyProps={{ className: classes.title }}
-        ></CardHeader> */}
+          <Card>
             <Dialog />
             <Grid
               data={data}

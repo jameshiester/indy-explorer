@@ -33,7 +33,8 @@
     "redux-logger": "^3.0.6",
     "reselect": "^4.0.0",
     "socket.io-client": "^2.3.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "use-debounce": "^3.4.3"
   },
   "scripts": {
     "start": "craco start",

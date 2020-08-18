@@ -27,7 +27,6 @@ export const useGetRows = ({
       const query = JSON.stringify(jsonQuery);
       const request = await axios(url, {
         params: {
-          mode: 'INFINITE',
           startRow: params.startRow,
           endRow: params.endRow,
           query: query,

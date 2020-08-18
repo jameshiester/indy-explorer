@@ -1,5 +1,5 @@
 import path from 'path';
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { createConnection } from 'typeorm';
 import http from 'http';
 import socket from 'socket.io';
@@ -12,6 +12,7 @@ import NodeStatus from './entity/nodestatus';
 import NodesStatusSummary from './entity/nodeSummary';
 import { RegisterRoutes } from './routes';
 import swaggerUi from 'swagger-ui-express';
+import { ValidateError } from 'tsoa';
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -19,7 +20,7 @@ const io = socket(httpServer, { serveClient: false });
 
 const {
   POSTGRES_PORT = 5432,
-  POSTGRES_USERNAME = 'postgres',
+  POSTGRES_USER = 'postgres',
   POSTGRES_PASSWORD = 'root',
   POSTGRES_HOST = 'pg-db',
   POSTGRES_DB = 'postgres',
@@ -29,7 +30,7 @@ createConnection({
   type: 'postgres',
   host: POSTGRES_HOST,
   port: Number(POSTGRES_PORT),
-  username: POSTGRES_USERNAME,
+  username: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
   synchronize: true,
@@ -39,6 +40,27 @@ createConnection({
   const anchor = new Anchor(io);
 
   RegisterRoutes(app);
+  app.use(function errorHandler(
+    err: unknown,
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Response | void {
+    if (err instanceof ValidateError) {
+      console.warn(`Caught Validation Error for ${req.path}:`, err.fields);
+      return res.status(422).json({
+        message: 'Validation Failed',
+        details: err?.fields,
+      });
+    }
+    if (err instanceof Error) {
+      return res.status(500).json({
+        message: 'Internal Server Error',
+      });
+    }
+
+    next();
+  });
 
   app.use(
     '/api/docs',

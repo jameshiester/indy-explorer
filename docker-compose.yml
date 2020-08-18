@@ -19,6 +19,7 @@ services:
       - ANONYMOUS=${ANONYMOUS}
       - DOCKERHOST=${DOCKERHOST}
       - GENESIS_URL=${GENESIS_URL}
+      - HEADER_BRAND=${HEADER_BRAND:-Hyperledger Indy}
       - IP=${IP}
       - IPS=${IPS}
       - LEDGER_CACHE_PATH=${LEDGER_CACHE_PATH}
@@ -27,13 +28,13 @@ services:
       - LOG_LEVEL=${LOG_LEVEL}
       - MAX_FETCH=${MAX_FETCH:-50000}
       - POSTGRES_DB=${POSTGRES_DB:-postgres}
+      - POSTGRES_HOST=${POSTGRES_HOST:-pg-db}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-root}
       - POSTGRES_PORT=${POSTGRES_PORT:-5432}
       - POSTGRES_USER=${POSTGRES_USER:-postgres}
       - REGISTER_NEW_DIDS=${REGISTER_NEW_DIDS:-True}
       - RESYNC_TIME=${RESYNC_TIME:-120000}
       - RUST_LOG=${RUST_LOG}
-      - HEADER_BRAND=${HEADER_BRAND:-Hyperledger Indy}
     networks:
       - von
     volumes:

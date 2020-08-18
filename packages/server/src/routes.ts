@@ -47,11 +47,6 @@ const models: TsoaRoute.Models = {
         "type": { "dataType": "nestedObjectLiteral", "nestedProperties": { "data": { "dataType": "array", "array": { "ref": "INode" }, "required": true }, "totalRecords": { "dataType": "double", "required": true } }, "validators": {} },
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "QueryMode": {
-        "dataType": "refEnum",
-        "enums": ["PAGE", "INFINITE"],
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "NodeStatus": {
         "dataType": "refObject",
         "properties": {
@@ -216,10 +211,7 @@ export function RegisterRoutes(app: express.Express) {
                 endRow: { "in": "query", "name": "endRow", "dataType": "double" },
                 query: { "in": "query", "name": "query", "dataType": "any" },
                 sortBy: { "default": "name", "in": "query", "name": "sortBy", "dataType": "string" },
-                page: { "in": "query", "name": "page", "dataType": "double" },
-                page_size: { "in": "query", "name": "page_size", "dataType": "double" },
                 sortMode: { "default": "ASC", "in": "query", "name": "sortMode", "dataType": "union", "subSchemas": [{ "dataType": "enum", "enums": ["ASC"] }, { "dataType": "enum", "enums": ["DESC"] }] },
-                mode: { "default": "INFINITE", "in": "query", "name": "mode", "ref": "QueryMode" },
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -316,11 +308,8 @@ export function RegisterRoutes(app: express.Express) {
                 startRow: { "in": "query", "name": "startRow", "dataType": "double" },
                 endRow: { "in": "query", "name": "endRow", "dataType": "double" },
                 query: { "in": "query", "name": "query", "dataType": "any" },
-                sortBy: { "default": "name", "in": "query", "name": "sortBy", "dataType": "string" },
-                page: { "in": "query", "name": "page", "dataType": "double" },
-                page_size: { "in": "query", "name": "page_size", "dataType": "double" },
+                sortBy: { "default": "sequence", "in": "query", "name": "sortBy", "dataType": "string" },
                 sortMode: { "default": "ASC", "in": "query", "name": "sortMode", "dataType": "union", "subSchemas": [{ "dataType": "enum", "enums": ["ASC"] }, { "dataType": "enum", "enums": ["DESC"] }] },
-                mode: { "default": "INFINITE", "in": "query", "name": "mode", "ref": "QueryMode" },
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
