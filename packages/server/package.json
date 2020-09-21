@@ -6,7 +6,8 @@
   "types": "build/index.d.ts",
   "scripts": {
     "build": "npm run build:routes && npm run build:docs && npm run build:code",
-    "test": "jest",
+    "test": "jest --watch=false",
+    "coverage": "jest --coverage",
     "build:routes": "tsoa routes",
     "build:docs": "tsoa spec",
     "build:code": "webpack"

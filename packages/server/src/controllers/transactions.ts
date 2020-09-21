@@ -8,7 +8,7 @@ import {
   Tags,
   TsoaResponse,
 } from 'tsoa';
-import { buildQuery, getLedgerTypeByName } from '../util';
+import { buildQuery, mapLedgerTypeToName } from '../util';
 import { provideSingleton } from '../ioc/util';
 import { ITransaction } from 'model';
 import { queryTransactions } from '../repository/transaction';
@@ -48,7 +48,7 @@ export class TransactionsController extends Controller {
         defaultSortColumn: 'sequence',
       });
       return await queryTransactions(
-        getLedgerTypeByName(ledgerType),
+        mapLedgerTypeToName(ledgerType),
         start,
         end,
         predicate,

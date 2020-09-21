@@ -1,4 +1,5 @@
 import { LedgerType, TransactionType, IndyRoleType } from 'model';
+
 export const asyncForEach = async <T>(
   array: T[],
   callback: (item: T, index: number, values: T[]) => Promise<void>
@@ -11,7 +12,7 @@ export const asyncForEach = async <T>(
 export const isInt = (val: string | number) =>
   typeof (val === 'number') && Number.isInteger(val as number);
 
-export const getLedgerTypeByName = (type: string): LedgerType => {
+export const mapLedgerTypeToName = (type: string): LedgerType => {
   const ledger = Object.entries(LedgerType).find(
     (ledgerType) => ledgerType[0] === type
   );
@@ -44,11 +45,11 @@ export const mapRoleTypeToName = (type?: string): string | undefined => {
 };
 
 export interface BuildQueryParams {
-  endRow?: number;
+  endRow?: number | string;
   query?: any;
-  sortBy: string;
-  sortMode: string;
-  startRow?: number;
+  sortBy?: string;
+  sortMode?: string;
+  startRow?: number | string;
   defaultSortColumn: string;
 }
 
