@@ -306,6 +306,7 @@ export interface IndyValidatorStatus {
 export interface IDid {
   id: string;
   from?: string;
+  role?: IndyRoleType;
   verkey?: string;
   attributes?: any;
 }

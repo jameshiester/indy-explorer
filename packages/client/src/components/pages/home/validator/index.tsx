@@ -18,7 +18,7 @@ import Throughput from './chart/Throughput';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     wrapper: {
-      marginTop: theme.spacing(3),
+      marginTop: theme.spacing(1.5),
     },
   })
 );

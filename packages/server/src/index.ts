@@ -20,10 +20,10 @@ const httpServer = http.createServer(app);
 const io = socket(httpServer, { serveClient: false });
 
 const {
-  POSTGRES_PORT = 5432,
+  POSTGRES_PORT = process.env.POSTGRES_PORT,
   POSTGRES_USER = 'postgres',
   POSTGRES_PASSWORD = 'root',
-  POSTGRES_HOST = 'pg-db',
+  POSTGRES_HOST = 'network-db',
   POSTGRES_DB = 'postgres',
 } = process.env;
 
@@ -77,6 +77,8 @@ createConnection({
       return res.send(swaggerUi.generateHTML(await import('./swagger.json')));
     }
   );
+
+  // add middlewares
   app.use(express.static(path.join(__dirname, '..', '..', 'client/build')));
   app.get('/*', (_, res) => {
     res.sendFile(path.join(__dirname, '..', '..', 'client/build/index.html'));

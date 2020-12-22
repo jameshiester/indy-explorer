@@ -6,7 +6,7 @@ import {
 } from '../repository/transaction';
 import { getTransactionFromLedger } from '../vdr';
 import { isEqual } from 'lodash';
-import { LedgerType } from 'model';
+import { DID_UPDATE, LedgerType } from 'model';
 import Transaction from '../entity/transaction';
 import { saveDids } from '../repository/did';
 import socket from 'socket.io';
@@ -60,8 +60,10 @@ export const syncLedgerCache = async (
       complete = true;
     }
   }
+  console.log(`adding ${rows.length} rows to ledger: ${ledgerType.toString()}`);
   await saveTransactions(rows);
   await setLatest(ledgerType, latest);
   const dids = await saveDids(rows);
+  io.emit(DID_UPDATE, dids);
   console.log('DONE SYNCING LEDGER: ', ledgerType);
 };

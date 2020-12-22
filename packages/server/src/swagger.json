@@ -6,6 +6,15 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"IndyRoleType": {
+				"enum": [
+					"0",
+					"2",
+					"100",
+					"101"
+				],
+				"type": "string"
+			},
 			"IDid": {
 				"properties": {
 					"id": {
@@ -13,6 +22,9 @@
 					},
 					"from": {
 						"type": "string"
+					},
+					"role": {
+						"$ref": "#/components/schemas/IndyRoleType"
 					},
 					"verkey": {
 						"type": "string"
@@ -620,15 +632,6 @@
 					"114",
 					"118",
 					"120"
-				],
-				"type": "string"
-			},
-			"IndyRoleType": {
-				"enum": [
-					"0",
-					"2",
-					"100",
-					"101"
 				],
 				"type": "string"
 			},

@@ -9,7 +9,7 @@ import Did from '../entity/did';
 import Transaction from '../entity/transaction';
 import { buildFilter } from './util';
 import { orderBy, merge } from 'lodash';
-import { asyncForEach } from '../util';
+import { asyncForEach, mapRoleTypeToName } from '../util';
 
 const mapAttributes = (
   transactions: Array<Transaction>,
@@ -30,7 +30,6 @@ const mapAttributes = (
       const data = JSON.parse(
         (transaction.value?.txn as AttributeTransaction).data.raw
       );
-      console.log(data);
       result = merge(result, data);
     } catch (e) {
       console.log('FAILED TO MERGE ATTRIBUTE', transaction);
@@ -40,9 +39,6 @@ const mapAttributes = (
 };
 
 export const saveDids = async (transactions: Array<Transaction>) => {
-  console.log(
-    console.log(transactions.map((transaction) => transaction.value?.txn.type))
-  );
   const nymTransactions = transactions.filter(
     (transaction) =>
       transaction.value && transaction.value.txn.type === TransactionType.NYM
@@ -63,14 +59,31 @@ export const saveDids = async (transactions: Array<Transaction>) => {
   });
   const repository = getRepository(Did);
   let result: Array<IDid> = [];
-  await asyncForEach(nyms, async (nym: IDid) => {
-    const existing = await repository.findOne(nym.id);
+  const nymDids = nyms
+    .map((nym) => nym.id)
+    .concat(
+      attTransactions.map(
+        (att) => (att.value?.txn as AttributeTransaction).data.dest
+      )
+    );
+  await asyncForEach(nymDids, async (nym: string) => {
+    const existing = await repository.findOne(nym);
+    const newNym: Partial<IDid> = nyms.find((nymTxn) => nymTxn.id === nym) || {
+      id: nym,
+    };
     const attributes = mapAttributes(
       attTransactions,
-      nym.id,
+      nym,
       existing?.attributes
     );
-    result.push(await repository.save({ ...nym, attributes }));
+    result.push(
+      await repository.save({
+        ...(existing || {}),
+        ...newNym,
+        attributes,
+        roleName: mapRoleTypeToName(existing?.role || newNym?.role),
+      })
+    );
   });
   return result;
 };

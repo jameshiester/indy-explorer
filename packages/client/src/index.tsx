@@ -11,25 +11,23 @@ import store from './store';
 
 import Theme from './util/Theme';
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <Theme>
-        <SnackbarProvider
-          autoHideDuration={5000}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          maxSnack={3}
-        >
-          <CssBaseline />
-          <Router>
-            <App />
-          </Router>
-        </SnackbarProvider>
-      </Theme>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <Theme>
+      <SnackbarProvider
+        autoHideDuration={5000}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        maxSnack={3}
+      >
+        <CssBaseline />
+        <Router>
+          <App />
+        </Router>
+      </SnackbarProvider>
+    </Theme>
+  </Provider>,
   document.getElementById('root')
 );
 

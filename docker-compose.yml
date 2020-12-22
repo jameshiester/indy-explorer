@@ -1,6 +1,6 @@
 version: '3.5'
 services:
-  pg-db:
+  network-db:
     image: postgres
     ports:
       - ${POSTGRES_PORT:-5433}:5432
@@ -11,7 +11,7 @@ services:
   webserver:
     image: indy-explorer
     depends_on:
-      - pg-db
+      - network-db
     command: "bash -c 'sleep 100; ./scripts/start_webserver.sh;'"
     environment:
       - ANONYMOUS=${ANONYMOUS}
@@ -26,7 +26,7 @@ services:
       - LOG_LEVEL=${LOG_LEVEL}
       - MAX_FETCH=${MAX_FETCH:-50000}
       - POSTGRES_DB=${POSTGRES_DB:-postgres}
-      - POSTGRES_HOST=${POSTGRES_HOST:-pg-db}
+      - POSTGRES_HOST=${POSTGRES_HOST:-network-db}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-root}
       - POSTGRES_PORT=${POSTGRES_PORT:-5432}
       - POSTGRES_USER=${POSTGRES_USER:-postgres}

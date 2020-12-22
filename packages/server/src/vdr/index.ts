@@ -12,15 +12,16 @@ export const getTransactionFromLedger = async (
     const response = await axios.get(`${VDR_URL}/txn/${ledger}/${sequence}`);
     if (response.data) {
       const txn = get(response.data, 'result.data') as IndyTransaction;
-      if (txn)
+      if (txn) {
         return {
           sequence,
           txnId: txn.txnMetadata.txnId,
           value: txn,
           success: true,
         };
+      }
+      return undefined;
     }
-    return undefined;
   } catch (e) {
     console.log(
       'FAILED TO GET TRANSACTION LEDGER',

@@ -8,16 +8,23 @@ import { DidsController } from './controllers/dids';
 import { NodesController } from './controllers/nodes';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { TransactionsController } from './controllers/transactions';
+import { iocContainer } from './ioc';
 import * as express from 'express';
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+    "IndyRoleType": {
+        "dataType": "refEnum",
+        "enums": ["0", "2", "100", "101"],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "IDid": {
         "dataType": "refObject",
         "properties": {
             "id": { "dataType": "string", "required": true },
             "from": { "dataType": "string" },
+            "role": { "ref": "IndyRoleType" },
             "verkey": { "dataType": "string" },
             "attributes": { "dataType": "any" },
         },
@@ -94,11 +101,6 @@ const models: TsoaRoute.Models = {
     "TransactionType": {
         "dataType": "refEnum",
         "enums": ["0", "1", "100", "101", "102", "103", "104", "105", "107", "108", "109", "110", "111", "112", "113", "114", "118", "120"],
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "IndyRoleType": {
-        "dataType": "refEnum",
-        "enums": ["0", "2", "100", "101"],
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "TransactionType.NYM": {
@@ -241,7 +243,10 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller = new DidsController();
+            const controller: any = iocContainer.get<DidsController>(DidsController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
 
 
             const promise = controller.getDids.apply(controller, validatedArgs as any);
@@ -268,7 +273,10 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller = new NodesController();
+            const controller: any = iocContainer.get<NodesController>(NodesController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
 
 
             const promise = controller.getNodes.apply(controller, validatedArgs as any);
@@ -291,7 +299,10 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller = new NodesController();
+            const controller: any = iocContainer.get<NodesController>(NodesController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
 
 
             const promise = controller.getHistory.apply(controller, validatedArgs as any);
@@ -315,7 +326,10 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller = new NodesController();
+            const controller: any = iocContainer.get<NodesController>(NodesController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
 
 
             const promise = controller.getHistoryByNode.apply(controller, validatedArgs as any);
@@ -338,7 +352,10 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller = new NodesController();
+            const controller: any = iocContainer.get<NodesController>(NodesController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
 
 
             const promise = controller.getHistorySummary.apply(controller, validatedArgs as any);
@@ -366,7 +383,10 @@ export function RegisterRoutes(app: express.Express) {
                 return next(err);
             }
 
-            const controller = new TransactionsController();
+            const controller: any = iocContainer.get<TransactionsController>(TransactionsController);
+            if (typeof controller['setStatus'] === 'function') {
+                controller.setStatus(undefined);
+            }
 
 
             const promise = controller.getTransactions.apply(controller, validatedArgs as any);

@@ -25,6 +25,7 @@
   },
   "routes": {
     "basePath": "/api",
-    "routesDir": "src"
+    "routesDir": "src",
+    "iocModule": "src/ioc"
   }
 }

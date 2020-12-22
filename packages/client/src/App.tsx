@@ -17,9 +17,9 @@ const App = () => {
   return (
     <SocketContext.Provider value={socket}>
       <div>
-        <Header />
         <Switch>
           <Route path="/home">
+            <Header />
             <Home />
           </Route>
           <Redirect exact from="/" to="/home" />

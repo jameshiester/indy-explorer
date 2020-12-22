@@ -4,6 +4,7 @@ import {
   Column,
   BeforeInsert,
   AfterLoad,
+  BeforeUpdate,
 } from 'typeorm';
 import { TransactionType, IndyTransaction, IndyRoleType, IDid } from 'model';
 import { mapRoleTypeToName } from '../util';
@@ -11,6 +12,7 @@ import { mapRoleTypeToName } from '../util';
 @Entity()
 class Did implements IDid {
   @BeforeInsert()
+  @BeforeUpdate()
   mapRoleType() {
     this.roleName = mapRoleTypeToName(this.role);
   }
