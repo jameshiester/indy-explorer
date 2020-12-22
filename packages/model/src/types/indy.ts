@@ -302,3 +302,10 @@ export interface IndyValidatorStatus {
     data: IndyValidatorData;
   };
 }
+
+export interface IDid {
+  id: string;
+  from?: string;
+  verkey?: string;
+  attributes?: any;
+}

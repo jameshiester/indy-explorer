@@ -8,12 +8,17 @@ import { getTransactionFromLedger } from '../vdr';
 import { isEqual } from 'lodash';
 import { LedgerType } from 'model';
 import Transaction from '../entity/transaction';
+import { saveDids } from '../repository/did';
+import socket from 'socket.io';
 
 const DEFAULT_MAX_FETCH = 50000;
 
 const { MAX_FETCH } = process.env;
 
-export const syncLedgerCache = async (ledgerType: LedgerType) => {
+export const syncLedgerCache = async (
+  ledgerType: LedgerType,
+  io: socket.Server
+) => {
   console.log('SYNCING LEDGER: ', ledgerType);
   const id = await getLatest(ledgerType);
   if (id) {
@@ -25,10 +30,6 @@ export const syncLedgerCache = async (ledgerType: LedgerType) => {
       !cacheTxn ||
       !isEqual(JSON.stringify(txn.value), JSON.stringify(cacheTxn.value))
     ) {
-      console.log(
-        JSON.stringify(txn),
-        JSON.stringify(cacheTxn ? cacheTxn.value : {})
-      );
       console.log('resetting?');
       //this._cache?.reset();
     }
@@ -61,5 +62,6 @@ export const syncLedgerCache = async (ledgerType: LedgerType) => {
   }
   await saveTransactions(rows);
   await setLatest(ledgerType, latest);
+  const dids = await saveDids(rows);
   console.log('DONE SYNCING LEDGER: ', ledgerType);
 };

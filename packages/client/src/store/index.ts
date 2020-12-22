@@ -3,15 +3,20 @@ import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import { combineReducers } from 'redux';
 import NodeReducer from './node/reducer';
+import DidReducer from './did/reducer';
 
 const initialState = {
   node: {
     nodes: [],
   },
+  did: {
+    dids: [],
+  },
 };
 
 const reducer = combineReducers({
   node: NodeReducer,
+  did: DidReducer,
 });
 
 const logger = createLogger({

@@ -36,7 +36,6 @@ const ledgers = [
   { value: 'DOMAIN', label: 'Domain Ledger' },
   { value: 'POOL', label: 'Pool Ledger' },
   { value: 'CONFIG', label: 'Config Ledger' },
-  { value: 'AUDIT', label: 'Audit Ledger' },
 ];
 
 const mapColIdToField = (colId: string) => get(colId.split('::'), '[1]');

@@ -68,10 +68,10 @@ export class Anchor {
       await asyncForEach(
         [LedgerType.CONFIG, LedgerType.DOMAIN, LedgerType.POOL],
         async (type: LedgerType) => {
-          await syncLedgerCache(type);
+          await syncLedgerCache(type, this._io);
           this._interval.push(
             setInterval(async () => {
-              await syncLedgerCache(type);
+              await syncLedgerCache(type, this._io);
             }, Number(RESYNC_TIME))
           );
         }
@@ -116,7 +116,6 @@ export class Anchor {
   async getAnonymousValidatorInfo(): Promise<Array<INode>> {
     const request = await buildGetValidatorInfoRequest();
     const response = (await this.submitRequest(request)) as any;
-    console.log(response);
     return [];
   }
 

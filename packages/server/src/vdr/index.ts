@@ -11,7 +11,7 @@ export const getTransactionFromLedger = async (
   try {
     const response = await axios.get(`${VDR_URL}/txn/${ledger}/${sequence}`);
     if (response.data) {
-      const txn = get(response.data, 'data') as IndyTransaction;
+      const txn = get(response.data, 'result.data') as IndyTransaction;
       if (txn)
         return {
           sequence,

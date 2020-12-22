@@ -8,8 +8,6 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-root}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
-    networks:
-      - von
   webserver:
     image: indy-explorer
     depends_on:
@@ -35,8 +33,6 @@ services:
       - REGISTER_NEW_DIDS=${REGISTER_NEW_DIDS:-True}
       - RESYNC_TIME=${RESYNC_TIME:-120000}
       - RUST_LOG=${RUST_LOG}
-    networks:
-      - von
     volumes:
       - ./packages/model:/home/indy/packages/model
       - ./packages/client:/home/indy/packages/client
@@ -48,8 +44,6 @@ services:
   node1:
     image: indy-explorer-node
     command: "bash -c './scripts/start_node.sh 1'"
-    networks:
-      - von
     ports:
       - 9701:9701
       - 9702:9702
@@ -65,8 +59,6 @@ services:
   node2:
     image: indy-explorer-node
     command: "bash -c './scripts/start_node.sh 2'"
-    networks:
-      - von
     ports:
       - 9703:9703
       - 9704:9704
@@ -82,8 +74,6 @@ services:
   node3:
     image: indy-explorer-node
     command: "bash -c './scripts/start_node.sh 3'"
-    networks:
-      - von
     ports:
       - 9705:9705
       - 9706:9706
@@ -99,8 +89,6 @@ services:
   node4:
     image: indy-explorer-node
     command: "bash -c './scripts/start_node.sh 4'"
-    networks:
-      - von
     ports:
       - 9707:9707
       - 9708:9708
@@ -112,10 +100,6 @@ services:
       - RUST_LOG=${RUST_LOG}
     volumes:
       - node4-data:/home/indy/ledger
-networks:
-  von:
-    name: von
-
 volumes:
   client-data:
   webserver-cli:

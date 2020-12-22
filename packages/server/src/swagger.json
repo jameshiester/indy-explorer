@@ -6,6 +6,44 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"IDid": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"from": {
+						"type": "string"
+					},
+					"verkey": {
+						"type": "string"
+					},
+					"attributes": {}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"GetDidsResponse": {
+				"properties": {
+					"data": {
+						"items": {
+							"$ref": "#/components/schemas/IDid"
+						},
+						"type": "array"
+					},
+					"totalRecords": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"data",
+					"totalRecords"
+				],
+				"type": "object"
+			},
 			"IndyValidatorData": {
 				"properties": {
 					"undefined": {
@@ -1059,6 +1097,95 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
+		"/dids": {
+			"get": {
+				"operationId": "GetDids",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/GetDidsResponse"
+										},
+										{}
+									]
+								}
+							}
+						}
+					},
+					"502": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"reason": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"reason"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Dids"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "startRow",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "endRow",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "query",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sortBy",
+						"required": false,
+						"schema": {
+							"default": "id",
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sortMode",
+						"required": false,
+						"schema": {
+							"default": "ASC"
+						}
+					}
+				]
+			}
+		},
 		"/nodes": {
 			"get": {
 				"operationId": "GetNodes",

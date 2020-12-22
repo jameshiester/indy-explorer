@@ -3,6 +3,7 @@ import Box from '@material-ui/core/Box';
 import Nav from './Nav';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import ValidatorList from './validator';
+import DidList from './did';
 import Transactions from './transaction';
 import Visualize from './visualize';
 
@@ -12,6 +13,7 @@ const Home: React.FC = () => {
       <Nav
         tabs={[
           { text: 'Nodes', to: '/nodes' },
+          { text: 'DIDs', to: '/dids' },
           { text: 'Transactions', to: '/transactions' },
           { text: 'Visualizer', to: '/visualize' },
         ]}
@@ -22,6 +24,9 @@ const Home: React.FC = () => {
         </Route>
         <Route strict path={'/home/nodes'}>
           <ValidatorList />
+        </Route>
+        <Route strict path={'/home/dids'}>
+          <DidList />
         </Route>
         <Route strict path={'/home/visualize'}>
           <Visualize />

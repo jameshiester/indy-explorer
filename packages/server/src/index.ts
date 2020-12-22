@@ -5,6 +5,7 @@ import http from 'http';
 import socket from 'socket.io';
 import Transaction from './entity/transaction';
 import Pointer from './entity/pointer';
+import Did from './entity/did';
 import { Anchor } from './anchor';
 import 'reflect-metadata';
 import IndyNode from './entity/node';
@@ -35,7 +36,14 @@ createConnection({
   database: POSTGRES_DB,
   synchronize: true,
   logging: false,
-  entities: [Pointer, Transaction, IndyNode, NodeStatus, NodesStatusSummary],
+  entities: [
+    Pointer,
+    Transaction,
+    IndyNode,
+    NodeStatus,
+    NodesStatusSummary,
+    Did,
+  ],
 }).then(async (connection) => {
   const anchor = new Anchor(io);
 
