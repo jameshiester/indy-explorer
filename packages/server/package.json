@@ -21,7 +21,7 @@
     "indy-sdk": "1.14.3",
     "inversify": "^5.0.1",
     "inversify-binding-decorators": "^4.0.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "model": "file:../model",
     "pg": "^8.3.0",
     "reflect-metadata": "^0.1.13",
